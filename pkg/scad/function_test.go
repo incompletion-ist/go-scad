@@ -33,8 +33,9 @@ func Test_EncodeFunction(t *testing.T) {
 			wantError: true,
 		},
 		{
-			name:  "empty struct",
-			input: struct{}{},
+			name:      "empty struct",
+			input:     struct{}{},
+			wantError: true,
 		},
 		{
 			name:  "unset empty",
@@ -80,6 +81,26 @@ func Test_EncodeFunction(t *testing.T) {
 					"center": "centerValue",
 				},
 			},
+		},
+		{
+			name: "multiple FunctionNameGetter",
+			input: struct {
+				cube     AutoFunctionName
+				cylinder AutoFunctionName
+			}{},
+			wantError: true,
+		},
+		{
+			name: "parameter collision",
+			input: struct {
+				cube AutoFunctionName
+				X    testParameterValueGetter `scad:"size"`
+				Size testParameterValueGetter `scad:"size"`
+			}{
+				X:    testParameterValueGetter{value: "xValue", explicit: true},
+				Size: testParameterValueGetter{value: "sizeValue", explicit: true},
+			},
+			wantError: true,
 		},
 	}
 
