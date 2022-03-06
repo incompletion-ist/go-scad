@@ -102,6 +102,50 @@ func Test_EncodeFunction(t *testing.T) {
 			},
 			wantError: true,
 		},
+		{
+			name: "children",
+			input: struct {
+				translate AutoFunctionName
+				Children  []interface{}
+			}{
+				Children: []interface{}{
+					testFunction{
+						Length: testParameterValueGetter{value: "20", explicit: true},
+					},
+					testFunction{
+						Length: testParameterValueGetter{value: "10", explicit: true},
+						Center: testParameterValueGetter{value: "true", explicit: true},
+					},
+				},
+			},
+			wantFunction: Function{
+				Name: "translate",
+				Children: []Function{
+					{
+						Name: "cube",
+						Parameters: map[string]string{
+							"x": "20",
+						},
+					},
+					{
+						Name: "cube",
+						Parameters: map[string]string{
+							"x":      "10",
+							"center": "true",
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "multiple children fields",
+			input: struct {
+				translate    AutoFunctionName
+				Children     []interface{}
+				MoreChildren []interface{}
+			}{},
+			wantError: true,
+		},
 	}
 
 	for _, test := range tests {

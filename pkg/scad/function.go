@@ -13,6 +13,9 @@ type Function struct {
 
 	// Parameters is a map of parameter names to parameter values in string form.
 	Parameters map[string]string
+
+	// Children is a slice of Function objects that are children of the Function.
+	Children []Function
 }
 
 // SetParameter sets the parameter with the given key to the given value. A boolean
@@ -64,12 +67,16 @@ type ParameterValueGetter interface {
 //
 // •The lowercased field name
 //
+// Slice fields set the Children values for the Function.
+//
 // An error will be returned if:
 //
 // • Exactly one FunctionNameGetter field is not found
 //
 // • Multiple field set a value for the same Parameter key (multiple fields can have the same key name,
 //   as long no more than one sets a value)
+//
+// • Multiple Children fields are found
 func EncodeFunction(i interface{}) (Function, error) {
 	var fn Function
 
@@ -129,7 +136,30 @@ func EncodeFunction(i interface{}) (Function, error) {
 					return Function{}, fmt.Errorf("scad: attempted to encode type (%T) with multiple ParameterValueGetter fields with the same name: %s", i, scadName)
 				}
 			}
+		}
 
+		// Children
+		if fieldV.Kind() == reflect.Slice {
+			// silently ignore unexported slices
+			if !field.IsExported() {
+				continue
+			}
+
+			if fn.Children != nil {
+				return Function{}, fmt.Errorf("scad: attempted to encode type (%T) with multiple slice fields", i)
+			}
+
+			children := make([]Function, fieldV.Len())
+
+			for i := 0; i < fieldV.Len(); i++ {
+				child, err := EncodeFunction(fieldV.Index(i).Interface())
+				if err != nil {
+					return Function{}, err
+				}
+
+				children[i] = child
+			}
+			fn.Children = children
 		}
 	}
 
