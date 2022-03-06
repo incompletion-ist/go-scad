@@ -3,6 +3,7 @@ package scad
 import (
 	"fmt"
 	"reflect"
+	"sort"
 	"strings"
 )
 
@@ -32,6 +33,22 @@ func (fn *Function) SetParameter(key string, value string) bool {
 	return replaced
 }
 
+// parametersString returns the Function's Parameters as a string suitable
+// to use when calling the function in .scad.
+func (fn Function) parametersString() string {
+	paramKeys := make([]string, 0, len(fn.Parameters))
+	for key := range fn.Parameters {
+		paramKeys = append(paramKeys, key)
+	}
+	sort.Strings(paramKeys)
+
+	params := make([]string, len(fn.Parameters))
+	for i, key := range paramKeys {
+		params[i] = fmt.Sprintf("%s=%s", key, fn.Parameters[key])
+	}
+
+	return strings.Join(params, ", ")
+}
 // FunctionNameGetter is the interface for types that implement GetFunctionName.
 type FunctionNameGetter interface {
 	// GetFunctionName returns a string representing the function name. The returned

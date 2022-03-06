@@ -5,6 +5,39 @@ import (
 	"testing"
 )
 
+func TestFunction_parametersString(t *testing.T) {
+	tests := []struct {
+		name  string
+		input Function
+		want  string
+	}{
+		{
+			name:  "empty",
+			input: Function{},
+			want:  "",
+		},
+		{
+			name: "many",
+			input: Function{
+				Parameters: map[string]string{
+					// intentionally misordered, but maps have no order anyway
+					"paramB": "valueB",
+					"paramA": "valueA",
+					"paramC": "valueC",
+				},
+			},
+			want: "paramA=valueA, paramB=valueB, paramC=valueC",
+		},
+	}
+
+	for _, test := range tests {
+		got := test.input.parametersString()
+
+		if got != test.want {
+			t.Errorf("%q parametersString() got\n%s, want\n%s", test.name, got, test.want)
+		}
+	}
+}
 type testParameterValueGetter struct {
 	value    string
 	explicit bool
