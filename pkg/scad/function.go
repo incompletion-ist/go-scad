@@ -116,6 +116,62 @@ func (fn Function) childUseStrings() ([]string, error) {
 	return chUseStrings, nil
 }
 
+// moduleCallString returns the directive to call the module.
+func (fn Function) moduleCallString() string {
+	return fmt.Sprintf("%s();", fn.ModuleName)
+}
+
+// moduleContentStrings returns the content of a module, surrounding the function's
+// content by the module() { } syntax.
+func (fn Function) moduleContentStrings() []string {
+	var mdStrings []string
+
+	mdStrings = append(mdStrings, fmt.Sprintf("module %s() {", fn.ModuleName))
+	for _, fnString := range fn.functionCallStrings() {
+		mdStrings = append(mdStrings, fmt.Sprintf("  %s", fnString))
+	}
+	mdStrings = append(mdStrings, fmt.Sprintf("}"))
+
+	// add module call at the end so any module can be opened directly in OpenSCAD
+	mdStrings = append(mdStrings, fn.moduleCallString())
+
+	return mdStrings
+}
+
+// functionCallStrings returns the content of a Function, including its children content.
+func (fn Function) functionCallStrings() []string {
+	var fnClose string = ";"
+	var childrenClose []string
+	if len(fn.Children) > 0 {
+		fnClose = " {"
+		childrenClose = []string{"}"}
+	}
+
+	fnCallStrings := []string{
+		fmt.Sprintf("%s(%s)%s", fn.Name, fn.parametersString(), fnClose),
+	}
+
+	fnStrings := []string{}
+	fnStrings = append(fnStrings, fnCallStrings...)
+
+	for _, child := range fn.Children {
+		for _, childString := range child.callStrings() {
+			fnStrings = append(fnStrings, fmt.Sprintf("  %s", childString))
+		}
+	}
+	fnStrings = append(fnStrings, childrenClose...)
+
+	return fnStrings
+}
+
+func (fn Function) callStrings() []string {
+	if fn.ModuleName != "" {
+		return []string{fn.moduleCallString()}
+	}
+
+	return fn.functionCallStrings()
+}
+
 // FunctionNameGetter is the interface for types that implement GetFunctionName.
 type FunctionNameGetter interface {
 	// GetFunctionName returns a string representing the function name. The returned
