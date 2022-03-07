@@ -88,10 +88,8 @@ func (fn Function) childModules() []Function {
 	return modules
 }
 
-// childUseStrings returns a slice of content strings containing the "use" directives
-// needed by the Function. An error is returned if there are multiple non-identical
-// modules with the same name.
-func (fn Function) childUseStrings() ([]string, error) {
+// uniqueChildModules returns the deduplicated output of childModules.
+func (fn Function) uniqueChildModules() ([]Function, error) {
 	seenModules := map[string]Function{}
 
 	for _, module := range fn.childModules() {
@@ -110,9 +108,26 @@ func (fn Function) childUseStrings() ([]string, error) {
 	}
 	sort.Strings(seenModuleNames)
 
-	chUseStrings := make([]string, len(seenModuleNames))
+	modules := make([]Function, len(seenModuleNames))
 	for i, moduleName := range seenModuleNames {
-		chUseStrings[i] = seenModules[moduleName].moduleUseString()
+		modules[i] = seenModules[moduleName]
+	}
+
+	return modules, nil
+}
+
+// childUseStrings returns a slice of content strings containing the "use" directives
+// needed by the Function. An error is returned if there are multiple non-identical
+// modules with the same name.
+func (fn Function) childUseStrings() ([]string, error) {
+	modules, err := fn.uniqueChildModules()
+	if err != nil {
+		return nil, err
+	}
+
+	chUseStrings := make([]string, len(modules))
+	for i, module := range modules {
+		chUseStrings[i] = module.moduleUseString()
 	}
 
 	return chUseStrings, nil
