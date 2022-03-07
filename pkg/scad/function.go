@@ -9,6 +9,10 @@ import (
 
 // Function describes a SCAD function call.
 type Function struct {
+	// ModuleName is the name of the module to create for the Function. If set
+	// the Function will be created as its own SCAD module.
+	ModuleName string
+
 	// Name is the function name, such as "cube", "cylinder", "translate".
 	Name string
 
@@ -61,6 +65,11 @@ type ParameterValueGetter interface {
 	// GetParameterValue returns a string representing the value, and a boolean indicating
 	// if the value is set.
 	GetParameterValue() (string, bool)
+}
+
+// ModuleNameGetter is the interface for types that implement GetModuleName.
+type ModuleNameGetter interface {
+	GetModuleName() string
 }
 
 // EncodeFunction encodes an interface into a Function. The given interface must be a struct.
@@ -122,6 +131,19 @@ func EncodeFunction(i interface{}) (Function, error) {
 
 		fieldV := iV.Field(i)
 		fieldT := fieldV.Type()
+
+		// ModuleName
+		if fieldT.Implements(reflect.TypeOf((*ModuleNameGetter)(nil)).Elem()) {
+			fn.ModuleName = scadName
+
+			if field.IsExported() {
+				gotMN := fieldV.Interface().(ModuleNameGetter).GetModuleName()
+				if gotMN != "" {
+					fn.ModuleName = gotMN
+				}
+
+			}
+		}
 
 		// Name
 		if fieldT.Implements(reflect.TypeOf((*FunctionNameGetter)(nil)).Elem()) {

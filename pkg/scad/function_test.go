@@ -71,6 +71,42 @@ func Test_EncodeFunction(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "untagged module name",
+			input: struct {
+				myModule   ModuleName
+				myFunction AutoFunctionName
+			}{},
+			wantFunction: Function{
+				ModuleName: "mymodule",
+				Name:       "myfunction",
+			},
+		},
+		{
+			name: "tagged module name",
+			input: struct {
+				myModule   ModuleName `scad:"my_module"`
+				myFunction AutoFunctionName
+			}{},
+			wantFunction: Function{
+				ModuleName: "my_module",
+				Name:       "myfunction",
+			},
+		},
+		{
+			name: "overridden module name",
+			input: struct {
+				// MyModule must be exported to be overridden
+				MyModule   ModuleName `scad:"my_module"`
+				myFunction AutoFunctionName
+			}{
+				MyModule: "my_customized_module_name",
+			},
+			wantFunction: Function{
+				ModuleName: "my_customized_module_name",
+				Name:       "myfunction",
+			},
+		},
+		{
 			name:  "unset empty",
 			input: testFunction{},
 			wantFunction: Function{
