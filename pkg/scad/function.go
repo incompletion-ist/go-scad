@@ -279,6 +279,14 @@ type ModuleNameGetter interface {
 	GetModuleName() string
 }
 
+// FunctionEncoder is the interface for types that implement EncodeFunction.
+type FunctionEncoder interface {
+	// EncodeFunction returns a new interface that should be passed to scad.EncodeFunction,
+	// enabling overriding of encoding functionality, or more generally to permit an arbitrary
+	// type to define what its SCAD Function is.
+	EncodeFunction() interface{}
+}
+
 // EncodeFunction encodes an interface into a Function. The given interface must be a struct.
 //
 // The resulting Function will have values applied based on the struct fields implementing
@@ -407,6 +415,18 @@ func EncodeFunction(i interface{}) (Function, error) {
 			}
 			fn.Children = children
 		}
+	}
+
+	// after all that, if the given interface is a FunctionEncoder, undo everything except module name
+	if iT.Implements(reflect.TypeOf((*FunctionEncoder)(nil)).Elem()) {
+		encoderFn, err := EncodeFunction(iV.Interface().(FunctionEncoder).EncodeFunction())
+		if err != nil {
+			return Function{}, err
+		}
+
+		encoderFn.ModuleName = fn.ModuleName
+
+		return encoderFn, nil
 	}
 
 	if fn.Name == "" {

@@ -508,11 +508,11 @@ func Test_EncodeFunction(t *testing.T) {
 		gotError := err != nil
 
 		if gotError != test.wantError {
-			t.Errorf("%q EncodeFunction returned error? %v (%s)", test.name, gotError, err)
+			t.Errorf("%q EncodeFunction() returned error? %v (%s)", test.name, gotError, err)
 		}
 
 		if !reflect.DeepEqual(gotFunction, test.wantFunction) {
-			t.Errorf("%q EncodeFunction got\n%#v, want\n%#v", test.name, gotFunction, test.wantFunction)
+			t.Errorf("%q EncodeFunction() got\n%#v, want\n%#v", test.name, gotFunction, test.wantFunction)
 		}
 	}
 }
