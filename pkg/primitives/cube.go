@@ -7,7 +7,7 @@ import (
 
 // Cube is a cube.
 type Cube struct {
-	cube scad.AutoFunctionName
+	cube scad.AutoFunctionName //nolint:golint,structcheck,unused
 
 	// Only one of these size values may be set.
 	Size    values.Float    `scad:"size"`

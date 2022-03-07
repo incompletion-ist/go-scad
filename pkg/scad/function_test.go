@@ -337,7 +337,7 @@ type testFunction struct {
 	Length testParameterValueGetter `scad:"x"`
 	Center testParameterValueGetter
 
-	cube AutoFunctionName
+	cube AutoFunctionName //nolint:golint,structcheck,unused
 }
 
 func Test_EncodeFunction(t *testing.T) {

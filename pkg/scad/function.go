@@ -147,7 +147,7 @@ func (fn Function) moduleContentStrings() []string {
 	for _, fnString := range fn.functionCallStrings() {
 		mdStrings = append(mdStrings, fmt.Sprintf("  %s", fnString))
 	}
-	mdStrings = append(mdStrings, fmt.Sprintf("}"))
+	mdStrings = append(mdStrings, "}")
 
 	// add module call at the end so any module can be opened directly in OpenSCAD
 	mdStrings = append(mdStrings, fn.moduleCallString())
