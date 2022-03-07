@@ -236,7 +236,6 @@ func (fn Function) Write(p string) error {
 	}
 
 	for _, childModule := range fn.childModules() {
-		fmt.Printf("child Name: %s, Module: %s\n", childModule.Name, childModule.ModuleName)
 		childPath := path.Join(p, childModule.ModuleName)
 
 		if err := os.MkdirAll(childPath, 0777); err != nil {
