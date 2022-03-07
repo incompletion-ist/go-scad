@@ -12,27 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package primitives
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Translate is a translate operation.
-type Translate struct {
-	translate scad.AutoFunctionName //nolint:golint,structcheck,unused
+// Cube is a cube.
+type Cube struct {
+	cube scad.AutoFunctionName //nolint:golint,structcheck,unused
 
-	V        values.FloatXYZ `scad:"v"`
-	Children []interface{}
-}
+	// Only one of these size values may be set.
+	Size    values.Float    `scad:"size"`
+	SizeXYZ values.FloatXYZ `scad:"size"`
 
-// TranslateTo applies a translate operation.
-func TranslateTo(x, y, z float64) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		return Translate{
-			V:        values.NewFloatXYZ(x, y, z),
-			Children: []interface{}{i},
-		}
-	}
+	Center values.Bool
 }

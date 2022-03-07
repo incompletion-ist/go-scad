@@ -16,7 +16,7 @@ package primitives
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Sphere is a sphere.

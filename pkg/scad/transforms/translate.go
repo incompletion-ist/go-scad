@@ -16,28 +16,22 @@ package transforms
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Rotate is a rotate transform.
-type Rotate struct {
-	rotate scad.AutoFunctionName //nolint:golint,structcheck,unused
+// Translate is a translate operation.
+type Translate struct {
+	translate scad.AutoFunctionName //nolint:golint,structcheck,unused
 
-	// Only one of A, Axyz may be set.
-	A    values.Float    `scad:"a"`
-	Axyz values.FloatXYZ `scad:"a"`
-
-	V values.FloatXYZ `scad:"v"`
-
+	V        values.FloatXYZ `scad:"v"`
 	Children []interface{}
 }
 
-// RotateAround performs a Rotate.
-func RotateAround(a, vX, vY, vZ float64) scad.ChildWrapper {
+// TranslateTo applies a translate operation.
+func TranslateTo(x, y, z float64) scad.ChildWrapper {
 	return func(i interface{}) interface{} {
-		return Rotate{
-			A:        values.NewFloat(a),
-			V:        values.NewFloatXYZ(vX, vY, vZ),
+		return Translate{
+			V:        values.NewFloatXYZ(x, y, z),
 			Children: []interface{}{i},
 		}
 	}

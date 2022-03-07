@@ -18,9 +18,9 @@ import (
 	"fmt"
 
 	"github.com/micahkemp/scad/examples/dice/dimples"
-	"github.com/micahkemp/scad/pkg/booleans"
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/transforms"
+	"github.com/micahkemp/scad/pkg/scad/booleans"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
 )
 
 // dimplesPlacement defines the rotation and translation for each Dimples arrangement.

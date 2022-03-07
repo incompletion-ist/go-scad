@@ -12,20 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package primitives
+package transforms
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Cube is a cube.
-type Cube struct {
-	cube scad.AutoFunctionName //nolint:golint,structcheck,unused
+// Rotate is a rotate transform.
+type Rotate struct {
+	rotate scad.AutoFunctionName //nolint:golint,structcheck,unused
 
-	// Only one of these size values may be set.
-	Size    values.Float    `scad:"size"`
-	SizeXYZ values.FloatXYZ `scad:"size"`
+	// Only one of A, Axyz may be set.
+	A    values.Float    `scad:"a"`
+	Axyz values.FloatXYZ `scad:"a"`
 
-	Center values.Bool
+	V values.FloatXYZ `scad:"v"`
+
+	Children []interface{}
+}
+
+// RotateAround performs a Rotate.
+func RotateAround(a, vX, vY, vZ float64) scad.ChildWrapper {
+	return func(i interface{}) interface{} {
+		return Rotate{
+			A:        values.NewFloat(a),
+			V:        values.NewFloatXYZ(vX, vY, vZ),
+			Children: []interface{}{i},
+		}
+	}
 }

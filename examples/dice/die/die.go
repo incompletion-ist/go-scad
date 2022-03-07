@@ -16,11 +16,11 @@ package die
 
 import (
 	"github.com/micahkemp/scad/examples/dice/dimples"
-	"github.com/micahkemp/scad/pkg/booleans"
-	"github.com/micahkemp/scad/pkg/primitives"
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/transforms"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/booleans"
+	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Die is a die.

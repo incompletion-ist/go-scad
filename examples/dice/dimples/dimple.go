@@ -17,10 +17,10 @@ package dimples
 import (
 	"math"
 
-	"github.com/micahkemp/scad/pkg/primitives"
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/transforms"
-	"github.com/micahkemp/scad/pkg/values"
+	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Dimple is a sphere that will be removed from a Die.

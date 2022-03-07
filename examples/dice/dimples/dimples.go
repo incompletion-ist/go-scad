@@ -17,9 +17,9 @@ package dimples
 import (
 	"fmt"
 
-	"github.com/micahkemp/scad/pkg/booleans"
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/transforms"
+	"github.com/micahkemp/scad/pkg/scad/booleans"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
 )
 
 // dimplePositions defines the placement of dimples from 0 to 7 dimples on a 2-dimensional face.
