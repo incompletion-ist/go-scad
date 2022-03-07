@@ -7,11 +7,9 @@ type ChildWrapper func(interface{}) interface{}
 // Wrap applies a set of ChildWrapper functions create a new interface
 // from the input interface.
 func Wrap(i interface{}, wrappers ...ChildWrapper) interface{} {
-	var newI interface{}
-
 	for _, wrapper := range wrappers {
-		newI = wrapper(i)
+		i = wrapper(i)
 	}
 
-	return newI
+	return i
 }
