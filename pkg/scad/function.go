@@ -53,6 +53,24 @@ func (fn Function) parametersString() string {
 
 	return strings.Join(params, ", ")
 }
+
+// childModules returns a slice of Functions for all direct descendent Functions that
+// are modules (non-empty ModuleName). A direct descendent is one that is not below
+// another module.
+func (fn Function) childModules() []Function {
+	var modules []Function
+
+	for _, child := range fn.Children {
+		if child.ModuleName != "" {
+			modules = append(modules, child)
+		} else {
+			modules = append(modules, child.childModules()...)
+		}
+	}
+
+	return modules
+}
+
 // FunctionNameGetter is the interface for types that implement GetFunctionName.
 type FunctionNameGetter interface {
 	// GetFunctionName returns a string representing the function name. The returned

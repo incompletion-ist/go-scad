@@ -38,6 +38,84 @@ func TestFunction_parametersString(t *testing.T) {
 		}
 	}
 }
+
+func TestFunction_childModules(t *testing.T) {
+	tests := []struct {
+		name  string
+		input Function
+		want  []Function
+	}{
+		{
+			name:  "empty",
+			input: Function{},
+			want:  nil,
+		},
+		{
+			name:  "no children",
+			input: Function{ModuleName: "topModule"},
+			want:  nil,
+		},
+		{
+			name: "one level",
+			input: Function{
+				ModuleName: "topModule",
+				Children: []Function{
+					{ModuleName: "child1Module"},
+					{ModuleName: "child2Module"},
+				},
+			},
+			want: []Function{
+				{ModuleName: "child1Module"},
+				{ModuleName: "child2Module"},
+			},
+		},
+		{
+			name: "child modules but under a module",
+			input: Function{
+				Children: []Function{
+					{ModuleName: "child1Module", Children: []Function{{ModuleName: "child1AModule"}}},
+				},
+			},
+			want: []Function{
+				{ModuleName: "child1Module", Children: []Function{{ModuleName: "child1AModule"}}},
+			},
+		},
+		{
+			name: "child modules",
+			input: Function{
+				Children: []Function{
+					{Children: []Function{{ModuleName: "child1AModule"}}},
+				},
+			},
+			want: []Function{
+				{ModuleName: "child1AModule"},
+			},
+		},
+		{
+			name: "multi-level nested modules",
+			input: Function{
+				Children: []Function{
+					{Children: []Function{
+						{Children: []Function{
+							{ModuleName: "child1AModule"},
+						}},
+					}},
+				},
+			},
+			want: []Function{
+				{ModuleName: "child1AModule"},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		got := test.input.childModules()
+
+		if !reflect.DeepEqual(got, test.want) {
+			t.Errorf("%q, childModules() got\n%#v, want\n%#v", test.name, got, test.want)
+		}
+	}
+}
 type testParameterValueGetter struct {
 	value    string
 	explicit bool
