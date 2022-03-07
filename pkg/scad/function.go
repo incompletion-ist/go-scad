@@ -286,7 +286,7 @@ type FunctionEncoder interface {
 	// EncodeFunction returns a new interface that should be passed to scad.EncodeFunction,
 	// enabling overriding of encoding functionality, or more generally to permit an arbitrary
 	// type to define what its SCAD Function is.
-	EncodeFunction() interface{}
+	EncodeFunction() (interface{}, error)
 }
 
 // EncodeFunction encodes an interface into a Function. The given interface must be a struct.
@@ -421,7 +421,12 @@ func EncodeFunction(i interface{}) (Function, error) {
 
 	// after all that, if the given interface is a FunctionEncoder, undo everything except module name
 	if iT.Implements(reflect.TypeOf((*FunctionEncoder)(nil)).Elem()) {
-		encoderFn, err := EncodeFunction(iV.Interface().(FunctionEncoder).EncodeFunction())
+		encodeFn, err := iV.Interface().(FunctionEncoder).EncodeFunction()
+		if err != nil {
+			return Function{}, err
+		}
+
+		encoderFn, err := EncodeFunction(encodeFn)
 		if err != nil {
 			return Function{}, err
 		}
