@@ -220,7 +220,6 @@ func (fn Function) Write(p string) error {
 		return fmt.Errorf("attempted Write on non-Module")
 	}
 
-	fmt.Printf("write: %s\n", p)
 	content, err := fn.content()
 	if err != nil {
 		return err
