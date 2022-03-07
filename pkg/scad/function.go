@@ -344,7 +344,7 @@ type FunctionEncoder interface {
 // • Exactly one FunctionNameGetter field is not found
 //
 // • Multiple field set a value for the same Parameter key (multiple fields can have the same key name,
-//   as long no more than one sets a value)
+// as long no more than one sets a value)
 //
 // • Multiple Children fields are found
 func EncodeFunction(i interface{}) (Function, error) {
