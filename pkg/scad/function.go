@@ -54,6 +54,21 @@ func (fn Function) parametersString() string {
 	return strings.Join(params, ", ")
 }
 
+// moduleFilename returns the module filename.
+func (fn Function) moduleFilename() string {
+	return fmt.Sprintf("%s.scad", fn.ModuleName)
+}
+
+// modulePath returns the relative path to the module.
+func (fn Function) modulePath() string {
+	return path.Join(fn.ModuleName, fn.moduleFilename())
+}
+
+// moduleUseString returns the "use" directive for the module.
+func (fn Function) moduleUseString() string {
+	return fmt.Sprintf("use <%s>", fn.modulePath())
+}
+
 // childModules returns a slice of Functions for all direct descendent Functions that
 // are modules (non-empty ModuleName). A direct descendent is one that is not below
 // another module.
@@ -69,6 +84,36 @@ func (fn Function) childModules() []Function {
 	}
 
 	return modules
+}
+
+// childUseStrings returns a slice of content strings containing the "use" directives
+// needed by the Function. An error is returned if there are multiple non-identical
+// modules with the same name.
+func (fn Function) childUseStrings() ([]string, error) {
+	seenModules := map[string]Function{}
+
+	for _, module := range fn.childModules() {
+		if seenModule, ok := seenModules[module.ModuleName]; ok {
+			if !reflect.DeepEqual(module, seenModule) {
+				return nil, fmt.Errorf("conflicting module name: %s", seenModule.ModuleName)
+			}
+		} else {
+			seenModules[module.ModuleName] = module
+		}
+	}
+
+	seenModuleNames := make([]string, 0, len(seenModules))
+	for moduleName := range seenModules {
+		seenModuleNames = append(seenModuleNames, moduleName)
+	}
+	sort.Strings(seenModuleNames)
+
+	chUseStrings := make([]string, len(seenModuleNames))
+	for i, moduleName := range seenModuleNames {
+		chUseStrings[i] = seenModules[moduleName].moduleUseString()
+	}
+
+	return chUseStrings, nil
 }
 
 // FunctionNameGetter is the interface for types that implement GetFunctionName.

@@ -116,6 +116,105 @@ func TestFunction_childModules(t *testing.T) {
 		}
 	}
 }
+
+func TestFunction_childUseStrings(t *testing.T) {
+	tests := []struct {
+		name      string
+		input     Function
+		want      []string
+		wantError bool
+	}{
+		{
+			name:  "empty",
+			input: Function{},
+			want:  []string{},
+		},
+		{
+			name:  "no children",
+			input: Function{ModuleName: "topModule"},
+			want:  []string{},
+		},
+		{
+			name: "one level",
+			input: Function{
+				ModuleName: "topModule",
+				Children: []Function{
+					{ModuleName: "child1Module"},
+					{ModuleName: "child2Module"},
+				},
+			},
+			want: []string{
+				"use <child1Module/child1Module.scad>",
+				"use <child2Module/child2Module.scad>",
+			},
+		},
+		{
+			name: "child modules but under a module",
+			input: Function{
+				ModuleName: "topModule",
+				Children: []Function{
+					{ModuleName: "child1Module", Children: []Function{{ModuleName: "child1AModule"}}},
+				},
+			},
+			want: []string{
+				"use <child1Module/child1Module.scad>",
+			},
+		},
+		{
+			name: "child modules",
+			input: Function{
+				Children: []Function{
+					{Children: []Function{{ModuleName: "child1AModule"}}},
+				},
+			},
+			want: []string{
+				"use <child1AModule/child1AModule.scad>",
+			},
+		},
+		{
+			name: "multi-level nested modules",
+			input: Function{
+				Children: []Function{
+					{Children: []Function{
+						{Children: []Function{
+							{ModuleName: "child1AModule"},
+						}},
+					}},
+				},
+			},
+			want: []string{
+				"use <child1AModule/child1AModule.scad>",
+			},
+		},
+		{
+			name: "module name conflicts",
+			input: Function{
+				Children: []Function{
+					{ModuleName: "my_module", Name: "cube"},
+					// the offending ModuleName is detected even when nested
+					{Children: []Function{
+						{ModuleName: "my_module", Name: "cylinder"},
+					}},
+				},
+			},
+			wantError: true,
+		},
+	}
+
+	for _, test := range tests {
+		got, err := test.input.childUseStrings()
+		gotError := err != nil
+
+		if gotError != test.wantError {
+			t.Errorf("%q childUseStrings returned error? %v (%s)", test.name, gotError, err)
+		}
+
+		if !reflect.DeepEqual(got, test.want) {
+			t.Errorf("%q childUseStrings got\n%#v, want\n%#v", test.name, got, test.want)
+		}
+	}
+}
+
 type testParameterValueGetter struct {
 	value    string
 	explicit bool
