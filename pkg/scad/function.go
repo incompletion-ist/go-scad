@@ -164,6 +164,8 @@ func (fn Function) functionCallStrings() []string {
 	return fnStrings
 }
 
+// callStrings returns the content for a Function, which will either be calling the module
+// by name (if ModuleName is set) or the Function's call contents.
 func (fn Function) callStrings() []string {
 	if fn.ModuleName != "" {
 		return []string{fn.moduleCallString()}
