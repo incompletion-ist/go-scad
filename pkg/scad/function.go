@@ -2,6 +2,8 @@ package scad
 
 import (
 	"fmt"
+	"os"
+	"path"
 	"reflect"
 	"sort"
 	"strings"
