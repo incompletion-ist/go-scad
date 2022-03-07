@@ -174,6 +174,92 @@ func (fn Function) callStrings() []string {
 	return fn.functionCallStrings()
 }
 
+// fileContentStrings returns all content lines for the Function that are needed
+// when writing it to a file. This will include the "use" directives at the top,
+// the module content, and calling the module at the end (so any module file can
+// be opened in OpenSCAD and viewed properly on its own).
+func (fn Function) fileContentStrings() ([]string, error) {
+	fStrings := []string{}
+
+	chUseStrings, err := fn.childUseStrings()
+	if err != nil {
+		return nil, err
+	}
+	fStrings = append(fStrings, chUseStrings...)
+
+	if fn.ModuleName == "" {
+		fStrings = append(fStrings, fn.functionCallStrings()...)
+	} else {
+		fStrings = append(fStrings, fn.moduleContentStrings()...)
+	}
+
+	// trailing newline
+	fStrings = append(fStrings, "")
+
+	return fStrings, nil
+}
+
+// content returns the Function's content as one large string, suitable to be
+// written to a file.
+func (fn Function) content() (string, error) {
+	contentStrings, err := fn.fileContentStrings()
+	if err != nil {
+		return "", err
+	}
+
+	return strings.Join(contentStrings, "\n"), nil
+}
+
+// Write writes the module at the given path. Any nested modules will be written
+// at paths relative to this one. For a Function to be successfully able to Write,
+// it must be a module (non-empty ModuleName).
+func (fn Function) Write(p string) error {
+	if fn.ModuleName == "" {
+		return fmt.Errorf("attempted Write on non-Module")
+	}
+
+	fmt.Printf("write: %s\n", p)
+	content, err := fn.content()
+	if err != nil {
+		return err
+	}
+
+	writeP := path.Join(p, fn.moduleFilename())
+	writeF, err := os.OpenFile(writeP, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		return err
+	}
+
+	if _, err := writeF.Write([]byte(content)); err != nil {
+		return err
+	}
+
+	for _, childModule := range fn.childModules() {
+		fmt.Printf("child Name: %s, Module: %s\n", childModule.Name, childModule.ModuleName)
+		childPath := path.Join(p, childModule.ModuleName)
+
+		if err := os.MkdirAll(childPath, 0777); err != nil {
+			return err
+		}
+
+		if err := childModule.Write(childPath); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// Write writes a given interface as a Function to the given location.
+func Write(p string, i interface{}) error {
+	fn, err := EncodeFunction(i)
+	if err != nil {
+		return err
+	}
+
+	return fn.Write(p)
+}
+
 // FunctionNameGetter is the interface for types that implement GetFunctionName.
 type FunctionNameGetter interface {
 	// GetFunctionName returns a string representing the function name. The returned
