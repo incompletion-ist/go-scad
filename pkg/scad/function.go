@@ -254,6 +254,10 @@ func (fn Function) Write(p string) error {
 		return err
 	}
 
+	if err := os.MkdirAll(p, 0777); err != nil {
+		return err
+	}
+
 	writeP := path.Join(p, fn.moduleFilename())
 	writeF, err := os.OpenFile(writeP, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -266,10 +270,6 @@ func (fn Function) Write(p string) error {
 
 	for _, childModule := range fn.childModules() {
 		childPath := path.Join(p, childModule.ModuleName)
-
-		if err := os.MkdirAll(childPath, 0777); err != nil {
-			return err
-		}
 
 		if err := childModule.Write(childPath); err != nil {
 			return err
@@ -287,6 +287,17 @@ func Write(p string, i interface{}) error {
 	}
 
 	return fn.Write(p)
+}
+
+// WriteMap writes each interface as a Function to a path of the key.
+func WriteMap(samples map[string]interface{}) error {
+	for name, sample := range samples {
+		if err := Write(name, sample); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // FunctionNameGetter is the interface for types that implement GetFunctionName.

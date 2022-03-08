@@ -45,3 +45,21 @@ func (d Die) EncodeFunction() (interface{}, error) {
 		}),
 	), nil
 }
+
+// DieSamples is a map of sample names to their sample Die.
+var DieSamples = map[string]interface{}{
+	"die_basic": Die{
+		Dimple: dimples.Dimple{
+			Depth:    2,
+			Diameter: 10,
+		},
+		Width: 60,
+	},
+	"die_shallow_dimple": Die{
+		Dimple: dimples.Dimple{
+			Depth:    0.5,
+			Diameter: 10,
+		},
+		Width: 60,
+	},
+}
