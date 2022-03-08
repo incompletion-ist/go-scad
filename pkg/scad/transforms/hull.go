@@ -14,11 +14,7 @@
 
 package transforms
 
-import "github.com/micahkemp/scad/pkg/scad"
-
 // Hull is a hull transform.
 type Hull struct {
-	hull scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Children []interface{}
 }

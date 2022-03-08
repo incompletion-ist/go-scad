@@ -341,6 +341,8 @@ type FunctionEncoder interface {
 //
 // •The lowercased field name
 //
+// •The lowercased type name
+//
 // ParameterValueGetter fields will set Parameter values for the Function. The Parameter's
 // key will be the last non-empty value of these options:
 //
@@ -352,7 +354,7 @@ type FunctionEncoder interface {
 //
 // An error will be returned if:
 //
-// • Exactly one FunctionNameGetter field is not found
+// • Name is empty after encoding
 //
 // • Multiple field set a value for the same Parameter key (multiple fields can have the same key name,
 // as long no more than one sets a value)
@@ -475,7 +477,11 @@ func EncodeFunction(i interface{}) (Function, error) {
 	}
 
 	if fn.Name == "" {
-		return Function{}, fmt.Errorf("scad: attempted to encode type (%T) without FunctionNameGetter field", i)
+		fn.Name = strings.ToLower(iT.Name())
+	}
+
+	if fn.Name == "" {
+		return Function{}, fmt.Errorf("scad: attempted to encode type (%T) with empty name", i)
 	}
 
 	return fn, nil

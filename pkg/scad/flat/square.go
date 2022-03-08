@@ -15,14 +15,11 @@
 package flat
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Square is a square.
 type Square struct {
-	square scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	// Only one of Size or SizeXY should be set.
 	Size   values.Float `scad:"size"`
 	SizeXY values.Float `scad:"size"`

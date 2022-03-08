@@ -21,8 +21,6 @@ import (
 
 // Translate is a translate operation.
 type Translate struct {
-	translate scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	V        values.FloatXYZ `scad:"v"`
 	Children []interface{}
 }

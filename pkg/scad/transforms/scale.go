@@ -15,14 +15,11 @@
 package transforms
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Scale is a scale transform.
 type Scale struct {
-	scale scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	V values.FloatXYZ `scad:"v"`
 
 	Children []interface{}

@@ -18,8 +18,6 @@ import "github.com/micahkemp/scad/pkg/scad"
 
 // Difference is a difference boolean operation.
 type Difference struct {
-	difference scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Children []interface{}
 }
 

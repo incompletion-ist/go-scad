@@ -21,8 +21,6 @@ import (
 
 // Rotate is a rotate transform.
 type Rotate struct {
-	rotate scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	// Only one of A, Axyz may be set.
 	A    values.Float    `scad:"a"`
 	Axyz values.FloatXYZ `scad:"a"`

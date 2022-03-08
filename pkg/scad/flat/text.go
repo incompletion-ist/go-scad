@@ -15,14 +15,11 @@
 package flat
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Text is text.
 type Text struct {
-	text scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Text      values.String `scad:"text"`
 	Size      values.Float  `scad:"size"`
 	Font      values.String `scad:"font"`

@@ -15,14 +15,11 @@
 package primitives
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Cylinder is a cylinder.
 type Cylinder struct {
-	cylinder scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	H      values.Float `scad:"h"`
 	R      values.Float `scad:"r"`
 	R1     values.Float `scad:"r1"`

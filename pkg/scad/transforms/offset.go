@@ -15,14 +15,11 @@
 package transforms
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Offset is an offset transform.
 type Offset struct {
-	offset scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	R       values.Float `scad:"r"`
 	Delta   values.Float `scad:"delta"`
 	Chamfer values.Bool  `scad:"chamfer"`
