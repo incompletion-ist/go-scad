@@ -18,8 +18,6 @@ import "github.com/micahkemp/scad/pkg/scad"
 
 // Union is a union boolean operation.
 type Union struct {
-	union scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Children []interface{}
 }
 

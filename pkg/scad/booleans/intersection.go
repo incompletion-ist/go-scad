@@ -14,11 +14,7 @@
 
 package booleans
 
-import "github.com/micahkemp/scad/pkg/scad"
-
 // Intersection is an intersection boolean operation.
 type Intersection struct {
-	intersection scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Children []interface{}
 }

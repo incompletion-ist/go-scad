@@ -14,11 +14,7 @@
 
 package transforms
 
-import "github.com/micahkemp/scad/pkg/scad"
-
 // Minkowski is a minkowsi transform.
 type Minkowski struct {
-	minkowsi scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	Children []interface{}
 }

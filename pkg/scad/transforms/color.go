@@ -15,14 +15,11 @@
 package transforms
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Color is a color.
 type Color struct {
-	color scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	C     values.FloatXYZ `scad:"c"`
 	Alpha values.Float    `scad:"alpha"`
 

@@ -15,14 +15,11 @@
 package transforms
 
 import (
-	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // Resize is a resize transform.
 type Resize struct {
-	resize scad.AutoFunctionName //nolint:golint,structcheck,unused
-
 	NewSize values.FloatXYZ `scad:"newsize"`
 	Auto    values.Bool     `scad:"auto"`
 
