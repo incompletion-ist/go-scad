@@ -20,11 +20,15 @@ import (
 	"strings"
 )
 
+// floatXY enables embedding a FloatXY in FloatXYZ without exporting it.
+type floatXY struct {
+	FloatXY
+}
+
 // FloatXYZ represents a tuple of XYZ float64 values that can be explicitly
 // set.
 type FloatXYZ struct {
-	valueX float64
-	valueY float64
+	floatXY
 	valueZ float64
 	set    bool
 }
@@ -42,17 +46,7 @@ func (xyz FloatXYZ) IsSet() bool {
 	return xyz.set
 }
 
-// ValueX returns the stored value for X.
-func (xyz FloatXYZ) ValueX() float64 {
-	return xyz.valueX
-}
-
-// ValueX returns the stored value for Y.
-func (xyz FloatXYZ) ValueY() float64 {
-	return xyz.valueY
-}
-
-// ValueX returns the stored value for Z.
+// ValueZ returns the stored value for Z.
 func (xyz FloatXYZ) ValueZ() float64 {
 	return xyz.valueZ
 }
