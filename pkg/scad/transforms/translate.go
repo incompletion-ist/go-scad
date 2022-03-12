@@ -25,6 +25,13 @@ type Translate struct {
 	Children []interface{}
 }
 
+// Wrap wraps a child with this Translate.
+func (translate Translate) Wrap(child interface{}) scad.Wrapper {
+	translate.Children = append([]interface{}{child}, translate.Children...)
+
+	return translate
+}
+
 // TranslateTo applies a translate operation.
 func TranslateTo(x, y, z float64) scad.ChildWrapper {
 	return func(i interface{}) interface{} {
