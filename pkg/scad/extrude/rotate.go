@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package scad
+package extrude
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
@@ -23,8 +23,8 @@ import (
 type RotateExtrude struct {
 	rotateExtrude scad.AutoFunctionName `scad:"rotate_extrude"` //nolint:golint,structcheck,unused
 
-	Convexity values.Int `scad:"convexity"`
-	Angle     values.Int `scad:"angle"`
+	Convexity values.Int   `scad:"convexity"`
+	Angle     values.Float `scad:"angle"`
 
 	Children []interface{}
 }
