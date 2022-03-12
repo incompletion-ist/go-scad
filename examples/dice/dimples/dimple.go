@@ -18,7 +18,7 @@ import (
 	"math"
 
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/primitive3d"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
@@ -39,7 +39,7 @@ func (d Dimple) EncodeFunction() (interface{}, error) {
 	sphereRadius := (math.Pow(d.Depth, 2) + math.Pow(d.Diameter/2, 2)) / (2 * d.Depth)
 
 	return scad.Apply(
-		primitives.Sphere{R: value.NewFloat(sphereRadius)},
+		primitive3d.Sphere{R: value.NewFloat(sphereRadius)},
 		transformation.Translate{
 			V: value.NewFloatXYZ(0, 0, sphereRadius-d.Depth),
 		},

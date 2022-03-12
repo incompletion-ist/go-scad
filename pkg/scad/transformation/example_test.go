@@ -18,14 +18,14 @@ import (
 	"fmt"
 
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/primitive3d"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 func Example() {
 	thing := scad.Apply(
-		primitives.Cube{
+		primitive3d.Cube{
 			Size: value.NewFloat(5),
 		},
 		transformation.Color{

@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package primitives
+package primitive3d
 
 import (
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-// Sphere is a sphere.
-type Sphere struct {
-	// Only one of R or D should be set.
-	R value.Float `scad:"r"`
-	D value.Float `scad:"d"`
+// Cube is a cube.
+type Cube struct {
+	// Only one of these size values may be set.
+	Size    value.Float    `scad:"size"`
+	SizeXYZ value.FloatXYZ `scad:"size"`
+
+	Center value.Bool
 }
