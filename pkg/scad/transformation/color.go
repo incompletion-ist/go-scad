@@ -16,13 +16,13 @@ package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Color is a color.
 type Color struct {
-	C     values.FloatXYZ `scad:"c"`
-	Alpha values.Float    `scad:"alpha"`
+	C     value.FloatXYZ `scad:"c"`
+	Alpha value.Float    `scad:"alpha"`
 
 	Children []interface{}
 }

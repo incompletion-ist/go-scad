@@ -15,14 +15,14 @@
 package flat
 
 import (
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Square is a square.
 type Square struct {
 	// Only one of Size or SizeXY should be set.
-	Size   values.Float `scad:"size"`
-	SizeXY values.Float `scad:"size"`
+	Size   value.Float `scad:"size"`
+	SizeXY value.Float `scad:"size"`
 
-	Center values.Bool
+	Center value.Bool
 }

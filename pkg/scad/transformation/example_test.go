@@ -20,19 +20,19 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/primitives"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 func Example() {
 	thing := scad.Apply(
 		primitives.Cube{
-			Size: values.NewFloat(5),
+			Size: value.NewFloat(5),
 		},
 		transformation.Color{
-			C: values.NewFloatXYZ(0.1, 0.2, 0.3),
+			C: value.NewFloatXYZ(0.1, 0.2, 0.3),
 		},
 		transformation.Translate{
-			V: values.NewFloatXYZ(10, 15, 20),
+			V: value.NewFloatXYZ(10, 15, 20),
 		},
 	)
 

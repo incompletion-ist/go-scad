@@ -16,16 +16,16 @@ package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Rotate is a rotate transform.
 type Rotate struct {
 	// Only one of A, Axyz may be set.
-	A    values.Float    `scad:"a"`
-	Axyz values.FloatXYZ `scad:"a"`
+	A    value.Float    `scad:"a"`
+	Axyz value.FloatXYZ `scad:"a"`
 
-	V values.FloatXYZ `scad:"v"`
+	V value.FloatXYZ `scad:"v"`
 
 	Children []interface{}
 }

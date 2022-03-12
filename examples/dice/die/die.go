@@ -20,7 +20,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad/booleans"
 	"github.com/micahkemp/scad/pkg/scad/primitives"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Die is a die.
@@ -37,9 +37,9 @@ type Die struct {
 // EncodeFunction implements custom encoding for scad.EncodeFunction.
 func (d Die) EncodeFunction() (interface{}, error) {
 	return scad.Apply(
-		primitives.Cube{Size: values.NewFloat(d.Width)},
+		primitives.Cube{Size: value.NewFloat(d.Width)},
 		transformation.Translate{
-			V: values.NewFloatXYZ(-d.Width/2, -d.Width/2, -d.Width/2),
+			V: value.NewFloatXYZ(-d.Width/2, -d.Width/2, -d.Width/2),
 		},
 		booleans.Difference{
 			Children: []interface{}{

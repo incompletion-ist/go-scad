@@ -16,12 +16,12 @@ package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Scale is a scale transform.
 type Scale struct {
-	V values.FloatXYZ `scad:"v"`
+	V value.FloatXYZ `scad:"v"`
 
 	Children []interface{}
 }

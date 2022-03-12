@@ -14,19 +14,17 @@
 
 package flat
 
-import (
-	"github.com/micahkemp/scad/pkg/scad/values"
-)
+import "github.com/micahkemp/scad/pkg/scad/value"
 
 // Text is text.
 type Text struct {
-	Text      values.String `scad:"text"`
-	Size      values.Float  `scad:"size"`
-	Font      values.String `scad:"font"`
-	Halign    values.String `scad:"halign"`
-	Valign    values.String `scad:"valign"`
-	Spacing   values.Float  `scad:"spacing"`
-	Direction values.String `scad:"direction"`
-	Language  values.String `scad:"language"`
-	Script    values.String `scad:"script"`
+	Text      value.String `scad:"text"`
+	Size      value.Float  `scad:"size"`
+	Font      value.String `scad:"font"`
+	Halign    value.String `scad:"halign"`
+	Valign    value.String `scad:"valign"`
+	Spacing   value.Float  `scad:"spacing"`
+	Direction value.String `scad:"direction"`
+	Language  value.String `scad:"language"`
+	Script    value.String `scad:"script"`
 }

@@ -16,21 +16,21 @@ package extrusion
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // LinearExtrude is a linear extrude.
 type LinearExtrude struct {
 	linearExtrude scad.AutoFunctionName `scad:"linear_extrude"` //nolint:golint,structcheck,unused
 
-	Height values.Float `scad:"height"`
-	Twist  values.Float `scad:"twist"`
-	Center values.Bool  `scad:"center"`
-	Slices values.Int   `scad:"slices"`
+	Height value.Float `scad:"height"`
+	Twist  value.Float `scad:"twist"`
+	Center value.Bool  `scad:"center"`
+	Slices value.Int   `scad:"slices"`
 
 	// Only one of Scale or ScaleXY should be set.
-	Scale   values.Float   `scad:"scale"`
-	ScaleXY values.FloatXY `scad:"scale"`
+	Scale   value.Float   `scad:"scale"`
+	ScaleXY value.FloatXY `scad:"scale"`
 
 	Children []interface{}
 }

@@ -21,19 +21,19 @@ import (
 	"github.com/micahkemp/scad/pkg/scad/extrusion"
 	"github.com/micahkemp/scad/pkg/scad/flat"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 func ExampleRotateExtrude() {
 	halfDonut := scad.Apply(
 		flat.Circle{
-			D: values.NewFloat(5),
+			D: value.NewFloat(5),
 		},
 		transformation.Translate{
-			V: values.NewFloatXYZ(5, 0, 0),
+			V: value.NewFloatXYZ(5, 0, 0),
 		},
 		extrusion.RotateExtrude{
-			Angle: values.NewFloat(180),
+			Angle: value.NewFloat(180),
 		},
 	)
 

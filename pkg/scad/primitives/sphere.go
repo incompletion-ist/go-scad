@@ -15,12 +15,12 @@
 package primitives
 
 import (
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Sphere is a sphere.
 type Sphere struct {
 	// Only one of R or D should be set.
-	R values.Float `scad:"r"`
-	D values.Float `scad:"d"`
+	R value.Float `scad:"r"`
+	D value.Float `scad:"d"`
 }
