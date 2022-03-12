@@ -12,15 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation_test
 
 import (
+	"fmt"
+
+	"github.com/micahkemp/scad/pkg/scad"
+	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Scale is a scale transform.
-type Scale struct {
-	V values.FloatXYZ `scad:"v"`
+func Example() {
+	thing := scad.Apply(
+		primitives.Cube{
+			Size: values.NewFloat(5),
+		},
+		transformation.Color{
+			C: values.NewFloatXYZ(0.1, 0.2, 0.3),
+		},
+		transformation.Translate{
+			V: values.NewFloatXYZ(10, 15, 20),
+		},
+	)
 
-	Children []interface{}
+	content, _ := scad.FunctionContent(thing)
+	fmt.Println(content)
+	// Output: translate(v=[10, 15, 20]) {
+	//   color(c=[0.1, 0.2, 0.3]) {
+	//     cube(size=5);
+	//   }
+	// }
 }

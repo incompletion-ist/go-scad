@@ -12,9 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
-
-// Hull is a hull transform.
-type Hull struct {
-	Children []interface{}
-}
+// Package transformation provides OpenSCAD transformation types.
+package transformation

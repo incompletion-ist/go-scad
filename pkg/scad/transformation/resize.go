@@ -12,32 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Translate is a translate operation.
-type Translate struct {
-	V        values.FloatXYZ `scad:"v"`
+// Resize is a resize transform.
+type Resize struct {
+	NewSize values.FloatXYZ `scad:"newsize"`
+	Auto    values.Bool     `scad:"auto"`
+
 	Children []interface{}
 }
 
-// Wrap wraps a child with this Translate.
-func (translate Translate) Wrap(child interface{}) scad.Wrapper {
-	translate.Children = append([]interface{}{child}, translate.Children...)
+// Wrap wraps a child with this Resize.
+func (resize Resize) Wrap(child interface{}) scad.Wrapper {
+	resize.Children = append([]interface{}{child}, resize.Children...)
 
-	return translate
-}
-
-// TranslateTo applies a translate operation.
-func TranslateTo(x, y, z float64) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		return Translate{
-			V:        values.NewFloatXYZ(x, y, z),
-			Children: []interface{}{i},
-		}
-	}
+	return resize
 }

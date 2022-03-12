@@ -12,9 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation
 
-// Minkowski is a minkowsi transform.
-type Minkowski struct {
+import (
+	"github.com/micahkemp/scad/pkg/scad"
+	"github.com/micahkemp/scad/pkg/scad/values"
+)
+
+// Scale is a scale transform.
+type Scale struct {
+	V values.FloatXYZ `scad:"v"`
+
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Scale.
+func (scale Scale) Wrap(child interface{}) scad.Wrapper {
+	scale.Children = append([]interface{}{child}, scale.Children...)
+
+	return scale
 }

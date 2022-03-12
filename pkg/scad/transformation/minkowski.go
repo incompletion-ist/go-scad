@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation
 
-import (
-	"github.com/micahkemp/scad/pkg/scad/values"
-)
+import "github.com/micahkemp/scad/pkg/scad"
 
-// Resize is a resize transform.
-type Resize struct {
-	NewSize values.FloatXYZ `scad:"newsize"`
-	Auto    values.Bool     `scad:"auto"`
-
+// Minkowski is a minkowsi transform.
+type Minkowski struct {
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Minkowski.
+func (minkowski Minkowski) Wrap(child interface{}) scad.Wrapper {
+	minkowski.Children = append([]interface{}{child}, minkowski.Children...)
+
+	return minkowski
 }

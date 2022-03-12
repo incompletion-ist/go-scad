@@ -12,16 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Color is a color.
-type Color struct {
-	C     values.FloatXYZ `scad:"c"`
-	Alpha values.Float    `scad:"alpha"`
+// Offset is an offset transform.
+type Offset struct {
+	R       values.Float `scad:"r"`
+	Delta   values.Float `scad:"delta"`
+	Chamfer values.Bool  `scad:"chamfer"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Offset.
+func (offset Offset) Wrap(child interface{}) scad.Wrapper {
+	offset.Children = append([]interface{}{child}, offset.Children...)
+
+	return offset
 }

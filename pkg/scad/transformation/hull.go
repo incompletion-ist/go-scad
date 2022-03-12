@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package booleans
+package transformation
 
 import "github.com/micahkemp/scad/pkg/scad"
 
-// Difference is a difference boolean operation.
-type Difference struct {
+// Hull is a hull transform.
+type Hull struct {
 	Children []interface{}
 }
 
-// Wrap wraps a child with this Difference.
-func (difference Difference) Wrap(child interface{}) scad.Wrapper {
-	difference.Children = append([]interface{}{child}, difference.Children...)
+// Wrap wraps a child with this Hull.
+func (hull Hull) Wrap(child interface{}) scad.Wrapper {
+	hull.Children = append([]interface{}{child}, hull.Children...)
 
-	return difference
+	return hull
 }

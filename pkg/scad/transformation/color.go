@@ -12,36 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package extrusion_test
+package transformation
 
 import (
-	"fmt"
-
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/extrusion"
-	"github.com/micahkemp/scad/pkg/scad/flat"
-	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-func ExampleRotateExtrude() {
-	halfDonut := scad.Apply(
-		flat.Circle{
-			D: values.NewFloat(5),
-		},
-		transformation.Translate{
-			V: values.NewFloatXYZ(5, 0, 0),
-		},
-		extrusion.RotateExtrude{
-			Angle: values.NewFloat(180),
-		},
-	)
+// Color is a color.
+type Color struct {
+	C     values.FloatXYZ `scad:"c"`
+	Alpha values.Float    `scad:"alpha"`
 
-	content, _ := scad.FunctionContent(halfDonut)
-	fmt.Println(content)
-	// Output: rotate_extrude(angle=180) {
-	//   translate(v=[5, 0, 0]) {
-	//     circle(d=5);
-	//   }
-	// }
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Color.
+func (color Color) Wrap(child interface{}) scad.Wrapper {
+	color.Children = append([]interface{}{child}, color.Children...)
+
+	return color
 }

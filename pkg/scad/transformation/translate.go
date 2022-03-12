@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Offset is an offset transform.
-type Offset struct {
-	R       values.Float `scad:"r"`
-	Delta   values.Float `scad:"delta"`
-	Chamfer values.Bool  `scad:"chamfer"`
-
+// Translate is a translate operation.
+type Translate struct {
+	V        values.FloatXYZ `scad:"v"`
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Translate.
+func (translate Translate) Wrap(child interface{}) scad.Wrapper {
+	translate.Children = append([]interface{}{child}, translate.Children...)
+
+	return translate
 }
