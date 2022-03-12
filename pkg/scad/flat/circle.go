@@ -14,13 +14,11 @@
 
 package flat
 
-import (
-	"github.com/micahkemp/scad/pkg/scad/values"
-)
+import "github.com/micahkemp/scad/pkg/scad/value"
 
 // Circle is a circle.
 type Circle struct {
 	// Only one of R or D should be set.
-	R values.Float `scad:"r"`
-	D values.Float `scad:"d"`
+	R value.Float `scad:"r"`
+	D value.Float `scad:"d"`
 }

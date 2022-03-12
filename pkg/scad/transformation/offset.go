@@ -16,14 +16,14 @@ package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Offset is an offset transform.
 type Offset struct {
-	R       values.Float `scad:"r"`
-	Delta   values.Float `scad:"delta"`
-	Chamfer values.Bool  `scad:"chamfer"`
+	R       value.Float `scad:"r"`
+	Delta   value.Float `scad:"delta"`
+	Chamfer value.Bool  `scad:"chamfer"`
 
 	Children []interface{}
 }

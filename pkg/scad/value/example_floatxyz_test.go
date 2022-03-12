@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flat
+package value_test
 
 import (
+	"fmt"
+
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-// Square is a square.
-type Square struct {
-	// Only one of Size or SizeXY should be set.
-	Size   value.Float `scad:"size"`
-	SizeXY value.Float `scad:"size"`
+func ExampleFloatXYZ() {
+	// unsetFloatXYZ has not been explicitly set
+	var unsetFloatXYZ value.FloatXYZ
+	stringValue, ok := unsetFloatXYZ.GetParameterValue()
+	fmt.Printf("value: %s, ok: %v\n", stringValue, ok)
 
-	Center value.Bool
+	// setFloatXYZ is explicitly set to [0, 0, 0]
+	setFloatXYZ := value.NewFloatXYZ(0, 0, 0)
+	stringValue, ok = setFloatXYZ.GetParameterValue()
+	fmt.Printf("value: %s, ok: %v\n", stringValue, ok)
+	// Output: value: [0, 0, 0], ok: false
+	// value: [0, 0, 0], ok: true
 }

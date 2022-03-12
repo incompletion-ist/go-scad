@@ -16,15 +16,15 @@ package extrusion
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // RotateExtrude is a rotate extrude.
 type RotateExtrude struct {
 	rotateExtrude scad.AutoFunctionName `scad:"rotate_extrude"` //nolint:golint,structcheck,unused
 
-	Convexity values.Int   `scad:"convexity"`
-	Angle     values.Float `scad:"angle"`
+	Convexity value.Int   `scad:"convexity"`
+	Angle     value.Float `scad:"angle"`
 
 	Children []interface{}
 }

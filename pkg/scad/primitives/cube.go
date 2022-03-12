@@ -15,14 +15,14 @@
 package primitives
 
 import (
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Cube is a cube.
 type Cube struct {
 	// Only one of these size values may be set.
-	Size    values.Float    `scad:"size"`
-	SizeXYZ values.FloatXYZ `scad:"size"`
+	Size    value.Float    `scad:"size"`
+	SizeXYZ value.FloatXYZ `scad:"size"`
 
-	Center values.Bool
+	Center value.Bool
 }

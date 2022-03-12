@@ -12,17 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flat
-
-import (
-	"github.com/micahkemp/scad/pkg/scad/value"
-)
-
-// Square is a square.
-type Square struct {
-	// Only one of Size or SizeXY should be set.
-	Size   value.Float `scad:"size"`
-	SizeXY value.Float `scad:"size"`
-
-	Center value.Bool
-}
+// Package value provides explicitly settable values to be used for OpenSCAD
+// function calls. Only explicitly set values are passed as function arguments.
+// The types in this package adhere to the scad.ParameterValueGetter interface.
+package value

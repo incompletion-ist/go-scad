@@ -20,7 +20,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/primitives"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Dimple is a sphere that will be removed from a Die.
@@ -39,13 +39,13 @@ func (d Dimple) EncodeFunction() (interface{}, error) {
 	sphereRadius := (math.Pow(d.Depth, 2) + math.Pow(d.Diameter/2, 2)) / (2 * d.Depth)
 
 	return scad.Apply(
-		primitives.Sphere{R: values.NewFloat(sphereRadius)},
+		primitives.Sphere{R: value.NewFloat(sphereRadius)},
 		transformation.Translate{
-			V: values.NewFloatXYZ(0, 0, sphereRadius-d.Depth),
+			V: value.NewFloatXYZ(0, 0, sphereRadius-d.Depth),
 		},
 		transformation.Rotate{
-			A: values.NewFloat(180),
-			V: values.NewFloatXYZ(1, 0, 0),
+			A: value.NewFloat(180),
+			V: value.NewFloatXYZ(1, 0, 0),
 		},
 	), nil
 }

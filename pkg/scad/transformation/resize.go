@@ -16,13 +16,13 @@ package transformation
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/values"
+	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
 // Resize is a resize transform.
 type Resize struct {
-	NewSize values.FloatXYZ `scad:"newsize"`
-	Auto    values.Bool     `scad:"auto"`
+	NewSize value.FloatXYZ `scad:"newsize"`
+	Auto    value.Bool     `scad:"auto"`
 
 	Children []interface{}
 }
