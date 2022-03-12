@@ -21,15 +21,9 @@ type Difference struct {
 	Children []interface{}
 }
 
-// DifferenceWith applies a difference operation.
-func DifferenceWith(with ...interface{}) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		children := make([]interface{}, 0, len(with)+1)
-		children = append(children, i)
-		children = append(children, with...)
+// Wrap wraps a child with this Difference.
+func (difference Difference) Wrap(child interface{}) scad.Wrapper {
+	difference.Children = append([]interface{}{child}, difference.Children...)
 
-		return Difference{
-			Children: children,
-		}
-	}
+	return difference
 }

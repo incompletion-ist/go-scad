@@ -21,15 +21,9 @@ type Union struct {
 	Children []interface{}
 }
 
-// UnionedWith applies a Union operation.
-func UnionedWith(additions ...interface{}) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		children := make([]interface{}, len(additions)+1)
-		children = append(children, i)
-		children = append(children, additions)
+// Wrap wraps a child with this Union.
+func (union Union) Wrap(child interface{}) scad.Wrapper {
+	union.Children = append([]interface{}{child}, union.Children...)
 
-		return Union{
-			Children: children,
-		}
-	}
+	return union
 }

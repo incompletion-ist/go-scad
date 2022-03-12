@@ -21,6 +21,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/booleans"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // dimplesPlacement defines the rotation and translation for each Dimples arrangement.
@@ -82,24 +83,28 @@ func (d Dimples) EncodeFunction() (interface{}, error) {
 	children := make([]interface{}, len(dimplesPlacement))
 
 	for i, rotation := range dimplesPlacement {
-		dimples := scad.Wrap(
+		dimples := scad.Apply(
 			dimples.Dimples{
 				Count:  rotation.count,
 				Dimple: d.Dimple,
 				Width:  d.Width,
 				Name:   scad.ModuleName(fmt.Sprintf("dimples_%d", rotation.count)),
 			},
-			transformation.RotateAround(
-				float64(rotation.rotateA),
-				float64(rotation.rotateV[0]),
-				float64(rotation.rotateV[1]),
-				float64(rotation.rotateV[2]),
-			),
-			transformation.TranslateTo(
-				float64(rotation.translate[0])*d.Width/2,
-				float64(rotation.translate[1])*d.Width/2,
-				float64(rotation.translate[2])*d.Width/2,
-			),
+			transformation.Rotate{
+				A: values.NewFloat(float64(rotation.rotateA)),
+				V: values.NewFloatXYZ(
+					float64(rotation.rotateV[0]),
+					float64(rotation.rotateV[1]),
+					float64(rotation.rotateV[2]),
+				),
+			},
+			transformation.Translate{
+				V: values.NewFloatXYZ(
+					float64(rotation.translate[0])*d.Width/2,
+					float64(rotation.translate[1])*d.Width/2,
+					float64(rotation.translate[2])*d.Width/2,
+				),
+			},
 		)
 
 		children[i] = dimples

@@ -20,6 +20,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/booleans"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
+	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
 // dimplePositions defines the placement of dimples from 0 to 7 dimples on a 2-dimensional face.
@@ -85,13 +86,15 @@ func (d Dimples) EncodeFunction() (interface{}, error) {
 	dimples := make([]interface{}, d.Count)
 
 	for i, dimplePosition := range dimpleLayout {
-		dimples[i] = scad.Wrap(
+		dimples[i] = scad.Apply(
 			d.Dimple,
-			transformation.TranslateTo(
-				float64(dimplePosition[0])*(d.Width/4),
-				float64(dimplePosition[1])*(d.Width/4),
-				0,
-			),
+			transformation.Translate{
+				V: values.NewFloatXYZ(
+					float64(dimplePosition[0])*(d.Width/4),
+					float64(dimplePosition[1])*(d.Width/4),
+					0,
+				),
+			},
 		)
 	}
 

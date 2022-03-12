@@ -31,13 +31,3 @@ func (translate Translate) Wrap(child interface{}) scad.Wrapper {
 
 	return translate
 }
-
-// TranslateTo applies a translate operation.
-func TranslateTo(x, y, z float64) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		return Translate{
-			V:        values.NewFloatXYZ(x, y, z),
-			Children: []interface{}{i},
-		}
-	}
-}

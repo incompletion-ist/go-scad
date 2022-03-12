@@ -38,9 +38,14 @@ type Dimple struct {
 func (d Dimple) EncodeFunction() (interface{}, error) {
 	sphereRadius := (math.Pow(d.Depth, 2) + math.Pow(d.Diameter/2, 2)) / (2 * d.Depth)
 
-	return scad.Wrap(
+	return scad.Apply(
 		primitives.Sphere{R: values.NewFloat(sphereRadius)},
-		transformation.TranslateTo(0, 0, sphereRadius-d.Depth),
-		transformation.RotateAround(180, 1, 0, 0),
+		transformation.Translate{
+			V: values.NewFloatXYZ(0, 0, sphereRadius-d.Depth),
+		},
+		transformation.Rotate{
+			A: values.NewFloat(180),
+			V: values.NewFloatXYZ(1, 0, 0),
+		},
 	), nil
 }

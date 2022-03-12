@@ -30,13 +30,9 @@ type Rotate struct {
 	Children []interface{}
 }
 
-// RotateAround performs a Rotate.
-func RotateAround(a, vX, vY, vZ float64) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		return Rotate{
-			A:        values.NewFloat(a),
-			V:        values.NewFloatXYZ(vX, vY, vZ),
-			Children: []interface{}{i},
-		}
-	}
+// Wrap wraps a child with this Rotate.
+func (rotate Rotate) Wrap(child interface{}) scad.Wrapper {
+	rotate.Children = append([]interface{}{child}, rotate.Children...)
+
+	return rotate
 }

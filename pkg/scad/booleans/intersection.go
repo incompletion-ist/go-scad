@@ -14,7 +14,16 @@
 
 package booleans
 
+import "github.com/micahkemp/scad/pkg/scad"
+
 // Intersection is an intersection boolean operation.
 type Intersection struct {
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Intersection.
+func (intersection Intersection) Wrap(child interface{}) scad.Wrapper {
+	intersection.Children = append([]interface{}{child}, intersection.Children...)
+
+	return intersection
 }
