@@ -20,7 +20,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/extrusion"
 	"github.com/micahkemp/scad/pkg/scad/flat"
-	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -29,7 +29,7 @@ func ExampleRotateExtrude() {
 		flat.Circle{
 			D: values.NewFloat(5),
 		},
-		transforms.Translate{
+		transformation.Translate{
 			V: values.NewFloatXYZ(5, 0, 0),
 		},
 		extrusion.RotateExtrude{

@@ -19,7 +19,7 @@ import (
 
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/primitives"
-	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -40,7 +40,7 @@ func (d Dimple) EncodeFunction() (interface{}, error) {
 
 	return scad.Wrap(
 		primitives.Sphere{R: values.NewFloat(sphereRadius)},
-		transforms.TranslateTo(0, 0, sphereRadius-d.Depth),
-		transforms.RotateAround(180, 1, 0, 0),
+		transformation.TranslateTo(0, 0, sphereRadius-d.Depth),
+		transformation.RotateAround(180, 1, 0, 0),
 	), nil
 }

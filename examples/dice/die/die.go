@@ -19,7 +19,7 @@ import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/booleans"
 	"github.com/micahkemp/scad/pkg/scad/primitives"
-	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -38,7 +38,7 @@ type Die struct {
 func (d Die) EncodeFunction() (interface{}, error) {
 	return scad.Wrap(
 		primitives.Cube{Size: values.NewFloat(d.Width)},
-		transforms.TranslateTo(-d.Width/2, -d.Width/2, -d.Width/2),
+		transformation.TranslateTo(-d.Width/2, -d.Width/2, -d.Width/2),
 		booleans.DifferenceWith(Dimples{
 			Dimple: d.Dimple,
 			Width:  d.Width,

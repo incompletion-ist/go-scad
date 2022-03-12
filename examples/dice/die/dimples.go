@@ -20,7 +20,7 @@ import (
 	"github.com/micahkemp/scad/examples/dice/dimples"
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/booleans"
-	"github.com/micahkemp/scad/pkg/scad/transforms"
+	"github.com/micahkemp/scad/pkg/scad/transformation"
 )
 
 // dimplesPlacement defines the rotation and translation for each Dimples arrangement.
@@ -89,13 +89,13 @@ func (d Dimples) EncodeFunction() (interface{}, error) {
 				Width:  d.Width,
 				Name:   scad.ModuleName(fmt.Sprintf("dimples_%d", rotation.count)),
 			},
-			transforms.RotateAround(
+			transformation.RotateAround(
 				float64(rotation.rotateA),
 				float64(rotation.rotateV[0]),
 				float64(rotation.rotateV[1]),
 				float64(rotation.rotateV[2]),
 			),
-			transforms.TranslateTo(
+			transformation.TranslateTo(
 				float64(rotation.translate[0])*d.Width/2,
 				float64(rotation.translate[1])*d.Width/2,
 				float64(rotation.translate[2])*d.Width/2,
