@@ -15,6 +15,7 @@
 package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -23,4 +24,11 @@ type Scale struct {
 	V values.FloatXYZ `scad:"v"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Scale.
+func (scale Scale) Wrap(child interface{}) scad.Wrapper {
+	scale.Children = append([]interface{}{child}, scale.Children...)
+
+	return scale
 }

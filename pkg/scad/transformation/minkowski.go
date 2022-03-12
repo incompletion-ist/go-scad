@@ -14,7 +14,16 @@
 
 package transformation
 
+import "github.com/micahkemp/scad/pkg/scad"
+
 // Minkowski is a minkowsi transform.
 type Minkowski struct {
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Minkowski.
+func (minkowski Minkowski) Wrap(child interface{}) scad.Wrapper {
+	minkowski.Children = append([]interface{}{child}, minkowski.Children...)
+
+	return minkowski
 }

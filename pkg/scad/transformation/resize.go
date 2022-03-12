@@ -15,6 +15,7 @@
 package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -24,4 +25,11 @@ type Resize struct {
 	Auto    values.Bool     `scad:"auto"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Resize.
+func (resize Resize) Wrap(child interface{}) scad.Wrapper {
+	resize.Children = append([]interface{}{child}, resize.Children...)
+
+	return resize
 }

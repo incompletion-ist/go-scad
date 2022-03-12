@@ -14,7 +14,16 @@
 
 package transformation
 
+import "github.com/micahkemp/scad/pkg/scad"
+
 // Hull is a hull transform.
 type Hull struct {
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Hull.
+func (hull Hull) Wrap(child interface{}) scad.Wrapper {
+	hull.Children = append([]interface{}{child}, hull.Children...)
+
+	return hull
 }

@@ -15,6 +15,7 @@
 package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -24,4 +25,11 @@ type Color struct {
 	Alpha values.Float    `scad:"alpha"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Color.
+func (color Color) Wrap(child interface{}) scad.Wrapper {
+	color.Children = append([]interface{}{child}, color.Children...)
+
+	return color
 }

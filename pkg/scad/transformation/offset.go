@@ -15,6 +15,7 @@
 package transformation
 
 import (
+	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
@@ -25,4 +26,11 @@ type Offset struct {
 	Chamfer values.Bool  `scad:"chamfer"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this Offset.
+func (offset Offset) Wrap(child interface{}) scad.Wrapper {
+	offset.Children = append([]interface{}{child}, offset.Children...)
+
+	return offset
 }
