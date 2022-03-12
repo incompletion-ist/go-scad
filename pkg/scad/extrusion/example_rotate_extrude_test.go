@@ -12,19 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package scad
+package extrusion_test
 
 import (
+	"fmt"
+
 	"github.com/micahkemp/scad/pkg/scad"
+	"github.com/micahkemp/scad/pkg/scad/extrusion"
+	"github.com/micahkemp/scad/pkg/scad/flat"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// RotateExtrude is a rotate extrude.
-type RotateExtrude struct {
-	rotateExtrude scad.AutoFunctionName `scad:"rotate_extrude"` //nolint:golint,structcheck,unused
+func ExampleRotateExtrude() {
+	halfDonut := scad.Apply(
+		flat.Circle{
+			D: values.NewFloat(5),
+		},
+		transforms.Translate{
+			V: values.NewFloatXYZ(5, 0, 0),
+		},
+		extrusion.RotateExtrude{
+			Angle: values.NewFloat(180),
+		},
+	)
 
-	Convexity values.Int `scad:"convexity"`
-	Angle     values.Int `scad:"angle"`
-
-	Children []interface{}
+	content, _ := scad.FunctionContent(halfDonut)
+	fmt.Println(content)
+	// Output: rotate_extrude(angle=180) {
+	//   translate(v=[5, 0, 0]) {
+	//     circle(d=5);
+	//   }
+	// }
 }

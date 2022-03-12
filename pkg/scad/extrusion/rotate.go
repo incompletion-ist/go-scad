@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package scad
+package extrusion
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// LinearExtrude is a linear extrude.
-type LinearExtrude struct {
-	linearExtrude scad.AutoFunctionName `scad:"linear_extrude"` //nolint:golint,structcheck,unused
+// RotateExtrude is a rotate extrude.
+type RotateExtrude struct {
+	rotateExtrude scad.AutoFunctionName `scad:"rotate_extrude"` //nolint:golint,structcheck,unused
 
-	Height values.Float `scad:"height"`
-	Twist  values.Float `scad:"twist"`
-	Center values.Bool  `scad:"center"`
-	Slices values.Int   `scad:"slices"`
-
-	// Only one of Scale or ScaleXY should be set.
-	Scale   values.Float   `scad:"scale"`
-	ScaleXY values.FloatXY `scad:"scale"`
+	Convexity values.Int   `scad:"convexity"`
+	Angle     values.Float `scad:"angle"`
 
 	Children []interface{}
+}
+
+// Wrap wraps a child with this RotateExtrude.
+func (extrude RotateExtrude) Wrap(child interface{}) scad.Wrapper {
+	extrude.Children = append([]interface{}{child}, extrude.Children...)
+
+	return extrude
 }

@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transforms
+package extrusion
 
 import (
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// Translate is a translate operation.
-type Translate struct {
-	V        values.FloatXYZ `scad:"v"`
+// LinearExtrude is a linear extrude.
+type LinearExtrude struct {
+	linearExtrude scad.AutoFunctionName `scad:"linear_extrude"` //nolint:golint,structcheck,unused
+
+	Height values.Float `scad:"height"`
+	Twist  values.Float `scad:"twist"`
+	Center values.Bool  `scad:"center"`
+	Slices values.Int   `scad:"slices"`
+
+	// Only one of Scale or ScaleXY should be set.
+	Scale   values.Float   `scad:"scale"`
+	ScaleXY values.FloatXY `scad:"scale"`
+
 	Children []interface{}
 }
 
-// Wrap wraps a child with this Translate.
-func (translate Translate) Wrap(child interface{}) scad.Wrapper {
-	translate.Children = append([]interface{}{child}, translate.Children...)
+// Wrap wraps a child with this LinearExtrude.
+func (extrude LinearExtrude) Wrap(child interface{}) scad.Wrapper {
+	extrude.Children = append([]interface{}{child}, extrude.Children...)
 
-	return translate
-}
-
-// TranslateTo applies a translate operation.
-func TranslateTo(x, y, z float64) scad.ChildWrapper {
-	return func(i interface{}) interface{} {
-		return Translate{
-			V:        values.NewFloatXYZ(x, y, z),
-			Children: []interface{}{i},
-		}
-	}
+	return extrude
 }
