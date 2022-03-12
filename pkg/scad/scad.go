@@ -21,6 +21,16 @@ import (
 	"strings"
 )
 
+// FunctionContent returns the OpenSCAD content for an input interface.
+func FunctionContent(i interface{}) (string, error) {
+	fn, err := EncodeFunction(i)
+	if err != nil {
+		return "", err
+	}
+
+	return fn.content()
+}
+
 // Write writes a given interface as a Function to the given location.
 func Write(p string, i interface{}) error {
 	fn, err := EncodeFunction(i)
