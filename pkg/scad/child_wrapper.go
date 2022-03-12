@@ -27,3 +27,23 @@ func Wrap(i interface{}, wrappers ...ChildWrapper) interface{} {
 
 	return i
 }
+
+// Wrapper is the interface for types that implement Wrap.
+type Wrapper interface {
+	// Wrap returns a new Wrapper by wrapping the given interface.
+	Wrap(interface{}) Wrapper
+}
+
+// Apply returns a new interface by wrapping the child with each given Wrapper in order.
+//
+// The returned value is an interface{}, not Wrapper, because is is possible for wrappers
+// to be empty, causing child to be returned directly.
+func Apply(child interface{}, wrappers ...Wrapper) interface{} {
+	wrapped := child
+
+	for _, wrapper := range wrappers {
+		wrapped = wrapper.Wrap(wrapped)
+	}
+
+	return wrapped
+}

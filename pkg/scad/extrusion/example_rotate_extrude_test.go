@@ -12,25 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package extrude
+package extrusion_test
 
 import (
+	"fmt"
+
 	"github.com/micahkemp/scad/pkg/scad"
+	"github.com/micahkemp/scad/pkg/scad/extrusion"
+	"github.com/micahkemp/scad/pkg/scad/flat"
+	"github.com/micahkemp/scad/pkg/scad/transforms"
 	"github.com/micahkemp/scad/pkg/scad/values"
 )
 
-// LinearExtrude is a linear extrude.
-type LinearExtrude struct {
-	linearExtrude scad.AutoFunctionName `scad:"linear_extrude"` //nolint:golint,structcheck,unused
+func ExampleRotateExtrude() {
+	halfDonut := scad.Apply(
+		flat.Circle{
+			D: values.NewFloat(5),
+		},
+		transforms.Translate{
+			V: values.NewFloatXYZ(5, 0, 0),
+		},
+		extrusion.RotateExtrude{
+			Angle: values.NewFloat(180),
+		},
+	)
 
-	Height values.Float `scad:"height"`
-	Twist  values.Float `scad:"twist"`
-	Center values.Bool  `scad:"center"`
-	Slices values.Int   `scad:"slices"`
-
-	// Only one of Scale or ScaleXY should be set.
-	Scale   values.Float   `scad:"scale"`
-	ScaleXY values.FloatXY `scad:"scale"`
-
-	Children []interface{}
+	content, _ := scad.FunctionContent(halfDonut)
+	fmt.Println(content)
+	// Output: rotate_extrude(angle=180) {
+	//   translate(v=[5, 0, 0]) {
+	//     circle(d=5);
+	//   }
+	// }
 }
