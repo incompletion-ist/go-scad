@@ -23,7 +23,7 @@ import (
 
 // FunctionContent returns the OpenSCAD content for an input interface.
 func FunctionContent(i interface{}) (string, error) {
-	fn, err := EncodeFunction(i)
+	fn, err := Encode(i)
 	if err != nil {
 		return "", err
 	}
@@ -33,7 +33,7 @@ func FunctionContent(i interface{}) (string, error) {
 
 // Write writes a given interface as a Function to the given location.
 func Write(p string, i interface{}) error {
-	fn, err := EncodeFunction(i)
+	fn, err := Encode(i)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ type SCADEncoder interface {
 	EncodeSCAD() (interface{}, error)
 }
 
-// EncodeFunction encodes an interface into a Function. The given interface must be a struct.
+// Encode encodes an interface into a scad.Function. The given interface must be a struct.
 //
 // The resulting Function will have values applied based on the struct fields implementing
 // one or more of these interfaces:
@@ -112,7 +112,7 @@ type SCADEncoder interface {
 // as long no more than one sets a value)
 //
 // • Multiple Children fields are found
-func EncodeFunction(i interface{}) (Function, error) {
+func Encode(i interface{}) (Function, error) {
 	var fn Function
 
 	if i == nil {
@@ -200,7 +200,7 @@ func EncodeFunction(i interface{}) (Function, error) {
 			children := make([]Function, fieldV.Len())
 
 			for i := 0; i < fieldV.Len(); i++ {
-				child, err := EncodeFunction(fieldV.Index(i).Interface())
+				child, err := Encode(fieldV.Index(i).Interface())
 				if err != nil {
 					return Function{}, err
 				}
@@ -218,7 +218,7 @@ func EncodeFunction(i interface{}) (Function, error) {
 			return Function{}, err
 		}
 
-		encoderFn, err := EncodeFunction(encodeFn)
+		encoderFn, err := Encode(encodeFn)
 		if err != nil {
 			return Function{}, err
 		}

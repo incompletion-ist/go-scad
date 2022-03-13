@@ -518,7 +518,7 @@ func Test_EncodeFunction(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		gotFunction, err := EncodeFunction(test.input)
+		gotFunction, err := Encode(test.input)
 		gotError := err != nil
 
 		if gotError != test.wantError {
