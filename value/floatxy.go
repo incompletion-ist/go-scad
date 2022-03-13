@@ -20,6 +20,17 @@ import (
 	"strings"
 )
 
+// floatTupleStrings returns a string for a tuple of floats.
+func floatTupleString(floats ...float64) string {
+	floatStrings := make([]string, len(floats))
+
+	for i, float := range floats {
+		floatStrings[i] = strconv.FormatFloat(float, 'f', -1, 64)
+	}
+
+	return fmt.Sprintf("[%s]", strings.Join(floatStrings, ", "))
+}
+
 // FloatXY represents a tuple of XY float64 values that can be explicitly
 // set.
 type FloatXY struct {
@@ -53,12 +64,7 @@ func (xy FloatXY) ValueY() float64 {
 // GetParameterValue returns a string value for the FloatXY, and a boolean
 // indicating if its value was explicity set.
 func (xy FloatXY) GetParameterValue() (string, bool) {
-	values := strings.Join([]string{
-		strconv.FormatFloat(xy.valueX, 'f', -1, 64),
-		strconv.FormatFloat(xy.valueY, 'f', -1, 64),
-	}, ", ")
-
-	value := fmt.Sprintf("[%s]", values)
+	value := floatTupleString(xy.valueX, xy.valueY)
 
 	return value, xy.set
 }
