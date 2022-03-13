@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package booleans
+package boolean
 
 import "github.com/micahkemp/scad/pkg/scad"
 
-// Difference is a difference boolean operation.
-type Difference struct {
+// Union is a union boolean operation.
+type Union struct {
 	Children []interface{}
 }
 
-// Wrap wraps a child with this Difference.
-func (difference Difference) Wrap(child interface{}) scad.Wrapper {
-	difference.Children = append([]interface{}{child}, difference.Children...)
+// Wrap wraps a child with this Union.
+func (union Union) Wrap(child interface{}) scad.Wrapper {
+	union.Children = append([]interface{}{child}, union.Children...)
 
-	return difference
+	return union
 }

@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/booleans"
+	"github.com/micahkemp/scad/pkg/scad/boolean"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
@@ -98,7 +98,7 @@ func (d Dimples) EncodeFunction() (interface{}, error) {
 		)
 	}
 
-	return booleans.Union{
+	return boolean.Union{
 		Children: dimples,
 	}, nil
 }

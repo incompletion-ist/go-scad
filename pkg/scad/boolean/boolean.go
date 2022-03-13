@@ -12,18 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package booleans
-
-import "github.com/micahkemp/scad/pkg/scad"
-
-// Union is a union boolean operation.
-type Union struct {
-	Children []interface{}
-}
-
-// Wrap wraps a child with this Union.
-func (union Union) Wrap(child interface{}) scad.Wrapper {
-	union.Children = append([]interface{}{child}, union.Children...)
-
-	return union
-}
+// Package boolean provides OpenSCAD boolean types.
+package boolean
