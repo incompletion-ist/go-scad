@@ -18,7 +18,7 @@ import (
 	"github.com/micahkemp/scad/examples/dice/dimples"
 	"github.com/micahkemp/scad/pkg/scad"
 	"github.com/micahkemp/scad/pkg/scad/booleans"
-	"github.com/micahkemp/scad/pkg/scad/primitives"
+	"github.com/micahkemp/scad/pkg/scad/primitive3d"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
@@ -37,7 +37,7 @@ type Die struct {
 // EncodeFunction implements custom encoding for scad.EncodeFunction.
 func (d Die) EncodeFunction() (interface{}, error) {
 	return scad.Apply(
-		primitives.Cube{Size: value.NewFloat(d.Width)},
+		primitive3d.Cube{Size: value.NewFloat(d.Width)},
 		transformation.Translate{
 			V: value.NewFloatXYZ(-d.Width/2, -d.Width/2, -d.Width/2),
 		},

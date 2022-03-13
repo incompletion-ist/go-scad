@@ -12,20 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package primitives
+package primitive3d
 
 import (
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-// Cylinder is a cylinder.
-type Cylinder struct {
-	H      value.Float `scad:"h"`
-	R      value.Float `scad:"r"`
-	R1     value.Float `scad:"r1"`
-	R2     value.Float `scad:"r2"`
-	D      value.Float `scad:"d"`
-	D1     value.Float `scad:"d1"`
-	D2     value.Float `scad:"d2"`
-	Center value.Bool  `scad:"center"`
+// Sphere is a sphere.
+type Sphere struct {
+	// Only one of R or D should be set.
+	R value.Float `scad:"r"`
+	D value.Float `scad:"d"`
 }

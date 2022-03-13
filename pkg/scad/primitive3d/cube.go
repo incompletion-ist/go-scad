@@ -12,35 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package transformation_test
+package primitive3d
 
 import (
-	"fmt"
-
-	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/primitive3d"
-	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-func Example() {
-	thing := scad.Apply(
-		primitive3d.Cube{
-			Size: value.NewFloat(5),
-		},
-		transformation.Color{
-			C: value.NewFloatXYZ(0.1, 0.2, 0.3),
-		},
-		transformation.Translate{
-			V: value.NewFloatXYZ(10, 15, 20),
-		},
-	)
+// Cube is a cube.
+type Cube struct {
+	// Only one of these size values may be set.
+	Size    value.Float    `scad:"size"`
+	SizeXYZ value.FloatXYZ `scad:"size"`
 
-	content, _ := scad.FunctionContent(thing)
-	fmt.Println(content)
-	// Output: translate(v=[10, 15, 20]) {
-	//   color(c=[0.1, 0.2, 0.3]) {
-	//     cube(size=5);
-	//   }
-	// }
+	Center value.Bool
 }
