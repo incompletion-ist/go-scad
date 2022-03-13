@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flat
+package primitive2d
 
 import "github.com/micahkemp/scad/pkg/scad/value"
 

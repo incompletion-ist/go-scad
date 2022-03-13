@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flat
+package primitive2d
 
-import (
-	"github.com/micahkemp/scad/pkg/scad/value"
-)
+import "github.com/micahkemp/scad/pkg/scad/value"
 
-// Square is a square.
-type Square struct {
-	// Only one of Size or SizeXY should be set.
-	Size   value.Float `scad:"size"`
-	SizeXY value.Float `scad:"size"`
-
-	Center value.Bool
+// Circle is a circle.
+type Circle struct {
+	// Only one of R or D should be set.
+	R value.Float `scad:"r"`
+	D value.Float `scad:"d"`
 }
