@@ -14,6 +14,8 @@
 
 package value
 
+import "fmt"
+
 // String represents an explicitly settable string.
 type String struct {
 	value string
@@ -40,7 +42,7 @@ func (s String) Value() string {
 // GetParameterValue returns a string value representing String, and a boolean
 // indicating if it was explicitly set.
 func (s String) GetParameterValue() (string, bool) {
-	return s.value, s.set
+	return fmt.Sprintf("%q", s.value), s.set
 }
 
 // NewString returns a new String with the given value explicitly set.
