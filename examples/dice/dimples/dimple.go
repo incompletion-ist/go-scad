@@ -34,8 +34,8 @@ type Dimple struct {
 	Diameter float64
 }
 
-// EncodeFunction implements custom encoding for scad.EncodeFunction.
-func (d Dimple) EncodeFunction() (interface{}, error) {
+// EncodeSCAD implements custom encoding for scad.Encode.
+func (d Dimple) EncodeSCAD() (interface{}, error) {
 	sphereRadius := (math.Pow(d.Depth, 2) + math.Pow(d.Diameter/2, 2)) / (2 * d.Depth)
 
 	return scad.Apply(

@@ -23,7 +23,7 @@ import (
 
 // FunctionContent returns the OpenSCAD content for an input interface.
 func FunctionContent(i interface{}) (string, error) {
-	fn, err := EncodeFunction(i)
+	fn, err := Encode(i)
 	if err != nil {
 		return "", err
 	}
@@ -33,7 +33,7 @@ func FunctionContent(i interface{}) (string, error) {
 
 // Write writes a given interface as a Function to the given location.
 func Write(p string, i interface{}) error {
-	fn, err := EncodeFunction(i)
+	fn, err := Encode(i)
 	if err != nil {
 		return err
 	}
@@ -71,15 +71,15 @@ type ModuleNameGetter interface {
 	GetModuleName() string
 }
 
-// FunctionEncoder is the interface for types that implement EncodeFunction.
-type FunctionEncoder interface {
-	// EncodeFunction returns a new interface that should be passed to scad.EncodeFunction,
-	// enabling overriding of encoding functionality, or more generally to permit an arbitrary
-	// type to define what its SCAD Function is.
-	EncodeFunction() (interface{}, error)
+// SCADEncoder is the interface for types that implement EncodeSCAD.
+type SCADEncoder interface {
+	// EncodeSCAD returns a new interface that should be passed to scad.EncodeSCAD, enabling
+	// overriding of encoding functionality, or more generally to permit an arbitrary type to
+	// define what object should be encoded in its place.
+	EncodeSCAD() (interface{}, error)
 }
 
-// EncodeFunction encodes an interface into a Function. The given interface must be a struct.
+// Encode encodes an interface into a scad.Function. The given interface must be a struct.
 //
 // The resulting Function will have values applied based on the struct fields implementing
 // one or more of these interfaces:
@@ -112,7 +112,7 @@ type FunctionEncoder interface {
 // as long no more than one sets a value)
 //
 // • Multiple Children fields are found
-func EncodeFunction(i interface{}) (Function, error) {
+func Encode(i interface{}) (Function, error) {
 	var fn Function
 
 	if i == nil {
@@ -200,7 +200,7 @@ func EncodeFunction(i interface{}) (Function, error) {
 			children := make([]Function, fieldV.Len())
 
 			for i := 0; i < fieldV.Len(); i++ {
-				child, err := EncodeFunction(fieldV.Index(i).Interface())
+				child, err := Encode(fieldV.Index(i).Interface())
 				if err != nil {
 					return Function{}, err
 				}
@@ -212,13 +212,13 @@ func EncodeFunction(i interface{}) (Function, error) {
 	}
 
 	// after all that, if the given interface is a FunctionEncoder, undo everything except module name
-	if iT.Implements(reflect.TypeOf((*FunctionEncoder)(nil)).Elem()) {
-		encodeFn, err := iV.Interface().(FunctionEncoder).EncodeFunction()
+	if iT.Implements(reflect.TypeOf((*SCADEncoder)(nil)).Elem()) {
+		encodeFn, err := iV.Interface().(SCADEncoder).EncodeSCAD()
 		if err != nil {
 			return Function{}, err
 		}
 
-		encoderFn, err := EncodeFunction(encodeFn)
+		encoderFn, err := Encode(encodeFn)
 		if err != nil {
 			return Function{}, err
 		}

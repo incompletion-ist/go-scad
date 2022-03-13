@@ -76,8 +76,8 @@ type Dimples struct {
 	Count int
 }
 
-// EncodeFunction implements custom encoding for scad.EncodeFunction.
-func (d Dimples) EncodeFunction() (interface{}, error) {
+// EncodeSCAD implements custom encoding for scad.Encode.
+func (d Dimples) EncodeSCAD() (interface{}, error) {
 	if d.Count < 0 || d.Count > 6 {
 		return nil, fmt.Errorf("dimples: Dimples Count is %d, must be between 0 and 6", d.Count)
 	}
