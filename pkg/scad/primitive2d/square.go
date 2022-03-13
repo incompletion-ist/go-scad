@@ -12,36 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package extrusion_test
+package primitive2d
 
 import (
-	"fmt"
-
-	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/extrusion"
-	"github.com/micahkemp/scad/pkg/scad/primitive2d"
-	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-func ExampleRotateExtrude() {
-	halfDonut := scad.Apply(
-		primitive2d.Circle{
-			D: value.NewFloat(5),
-		},
-		transformation.Translate{
-			V: value.NewFloatXYZ(5, 0, 0),
-		},
-		extrusion.RotateExtrude{
-			Angle: value.NewFloat(180),
-		},
-	)
+// Square is a square.
+type Square struct {
+	// Only one of Size or SizeXY should be set.
+	Size   value.Float `scad:"size"`
+	SizeXY value.Float `scad:"size"`
 
-	content, _ := scad.FunctionContent(halfDonut)
-	fmt.Println(content)
-	// Output: rotate_extrude(angle=180) {
-	//   translate(v=[5, 0, 0]) {
-	//     circle(d=5);
-	//   }
-	// }
+	Center value.Bool
 }

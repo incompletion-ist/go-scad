@@ -12,36 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package extrusion_test
+package primitive2d_test
 
 import (
 	"fmt"
 
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/extrusion"
 	"github.com/micahkemp/scad/pkg/scad/primitive2d"
-	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
 )
 
-func ExampleRotateExtrude() {
-	halfDonut := scad.Apply(
-		primitive2d.Circle{
-			D: value.NewFloat(5),
-		},
-		transformation.Translate{
-			V: value.NewFloatXYZ(5, 0, 0),
-		},
-		extrusion.RotateExtrude{
-			Angle: value.NewFloat(180),
-		},
-	)
+func ExampleText() {
+	text := primitive2d.Text{
+		Text: value.NewString("Hello World!"),
+		Size: value.NewFloat(10),
+	}
 
-	content, _ := scad.FunctionContent(halfDonut)
+	content, _ := scad.FunctionContent(text)
 	fmt.Println(content)
-	// Output: rotate_extrude(angle=180) {
-	//   translate(v=[5, 0, 0]) {
-	//     circle(d=5);
-	//   }
-	// }
+	// Output: text(size=10, text="Hello World!");
 }

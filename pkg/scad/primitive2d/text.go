@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flat
+package primitive2d
 
 import "github.com/micahkemp/scad/pkg/scad/value"
 
-// Circle is a circle.
-type Circle struct {
-	// Only one of R or D should be set.
-	R value.Float `scad:"r"`
-	D value.Float `scad:"d"`
+// Text is text.
+type Text struct {
+	Text      value.String `scad:"text"`
+	Size      value.Float  `scad:"size"`
+	Font      value.String `scad:"font"`
+	Halign    value.String `scad:"halign"`
+	Valign    value.String `scad:"valign"`
+	Spacing   value.Float  `scad:"spacing"`
+	Direction value.String `scad:"direction"`
+	Language  value.String `scad:"language"`
+	Script    value.String `scad:"script"`
 }
