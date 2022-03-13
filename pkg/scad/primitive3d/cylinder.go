@@ -28,4 +28,8 @@ type Cylinder struct {
 	D1     value.Float `scad:"d1"`
 	D2     value.Float `scad:"d2"`
 	Center value.Bool  `scad:"center"`
+
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
 }

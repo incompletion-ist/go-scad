@@ -32,6 +32,8 @@ type LinearExtrude struct {
 	Scale   value.Float   `scad:"scale"`
 	ScaleXY value.FloatXY `scad:"scale"`
 
+	FN value.Int `scad:"$fn"`
+
 	Children []interface{}
 }
 

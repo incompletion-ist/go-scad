@@ -26,6 +26,10 @@ type RotateExtrude struct {
 	Convexity value.Int   `scad:"convexity"`
 	Angle     value.Float `scad:"angle"`
 
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
+
 	Children []interface{}
 }
 

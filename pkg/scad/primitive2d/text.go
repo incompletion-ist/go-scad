@@ -27,4 +27,6 @@ type Text struct {
 	Direction value.String `scad:"direction"`
 	Language  value.String `scad:"language"`
 	Script    value.String `scad:"script"`
+
+	FN value.Int `scad:"$fn"`
 }
