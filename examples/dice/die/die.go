@@ -34,8 +34,8 @@ type Die struct {
 	Width float64
 }
 
-// EncodeFunction implements custom encoding for scad.EncodeFunction.
-func (d Die) EncodeFunction() (interface{}, error) {
+// EncodeSCAD implements custom encoding for scad.Encode.
+func (d Die) EncodeSCAD() (interface{}, error) {
 	return scad.Apply(
 		primitive3d.Cube{Size: value.NewFloat(d.Width)},
 		transformation.Translate{

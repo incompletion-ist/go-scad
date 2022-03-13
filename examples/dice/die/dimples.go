@@ -78,8 +78,8 @@ type Dimples struct {
 	Width float64
 }
 
-// EncodeFunction implements custom encoding for scad.EncodeFunction.
-func (d Dimples) EncodeFunction() (interface{}, error) {
+// EncodeSCAD implements custom encoding for scad.Encode.
+func (d Dimples) EncodeSCAD() (interface{}, error) {
 	children := make([]interface{}, len(dimplesPlacement))
 
 	for i, rotation := range dimplesPlacement {
