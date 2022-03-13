@@ -23,4 +23,8 @@ type Sphere struct {
 	// Only one of R or D should be set.
 	R value.Float `scad:"r"`
 	D value.Float `scad:"d"`
+
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
 }
