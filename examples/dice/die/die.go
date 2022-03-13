@@ -17,7 +17,7 @@ package die
 import (
 	"github.com/micahkemp/scad/examples/dice/dimples"
 	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/booleans"
+	"github.com/micahkemp/scad/pkg/scad/boolean"
 	"github.com/micahkemp/scad/pkg/scad/primitive3d"
 	"github.com/micahkemp/scad/pkg/scad/transformation"
 	"github.com/micahkemp/scad/pkg/scad/value"
@@ -41,7 +41,7 @@ func (d Die) EncodeFunction() (interface{}, error) {
 		transformation.Translate{
 			V: value.NewFloatXYZ(-d.Width/2, -d.Width/2, -d.Width/2),
 		},
-		booleans.Difference{
+		boolean.Difference{
 			Children: []interface{}{
 				Dimples{
 					Dimple: d.Dimple,
