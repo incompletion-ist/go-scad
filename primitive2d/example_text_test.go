@@ -17,8 +17,8 @@ package primitive2d_test
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/primitive2d"
+	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/value"
 )
 

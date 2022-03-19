@@ -17,8 +17,8 @@ package dimples
 import (
 	"math"
 
-	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/primitive3d"
+	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/transformation"
 	"go.incompletion.ist/scad/value"
 )

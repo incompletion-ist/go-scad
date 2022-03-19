@@ -17,9 +17,9 @@ package extrusion_test
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/extrusion"
 	"go.incompletion.ist/scad/primitive2d"
+	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/transformation"
 	"go.incompletion.ist/scad/value"
 )

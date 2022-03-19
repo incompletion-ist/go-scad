@@ -17,9 +17,9 @@ package die
 import (
 	"fmt"
 
+	"go.incompletion.ist/scad/boolean"
 	"go.incompletion.ist/scad/examples/dice/dimples"
 	"go.incompletion.ist/scad/scad"
-	"go.incompletion.ist/scad/boolean"
 	"go.incompletion.ist/scad/transformation"
 	"go.incompletion.ist/scad/value"
 )

@@ -17,8 +17,8 @@ package transformation_test
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/primitive3d"
+	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/transformation"
 	"go.incompletion.ist/scad/value"
 )
