@@ -17,10 +17,10 @@ package dimples
 import (
 	"fmt"
 
-	"github.com/micahkemp/scad/pkg/scad"
-	"github.com/micahkemp/scad/pkg/scad/boolean"
-	"github.com/micahkemp/scad/pkg/scad/transformation"
-	"github.com/micahkemp/scad/pkg/scad/value"
+	"go.incompletion.ist/scad/boolean"
+	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/transformation"
+	"go.incompletion.ist/scad/value"
 )
 
 // dimplePositions defines the placement of dimples from 0 to 7 dimples on a 2-dimensional face.

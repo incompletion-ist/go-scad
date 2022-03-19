@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package boolean
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/scad"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Union is a union boolean operation.
+type Union struct {
+	Children []interface{}
+}
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Wrap wraps a child with this Union.
+func (union Union) Wrap(child interface{}) scad.Wrapper {
+	union.Children = append([]interface{}{child}, union.Children...)
+
+	return union
 }

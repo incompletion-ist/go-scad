@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package boolean
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/scad"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Difference is a difference boolean operation.
+type Difference struct {
+	Children []interface{}
+}
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Wrap wraps a child with this Difference.
+func (difference Difference) Wrap(child interface{}) scad.Wrapper {
+	difference.Children = append([]interface{}{child}, difference.Children...)
+
+	return difference
 }

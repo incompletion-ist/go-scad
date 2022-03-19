@@ -12,17 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation_test
 
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
+	"go.incompletion.ist/scad/primitive3d"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/transformation"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+func Example() {
+	thing := scad.Apply(
+		primitive3d.Cube{
+			Size: value.NewFloat(5),
+		},
+		transformation.Color{
+			C: value.NewFloatXYZ(0.1, 0.2, 0.3),
+		},
+		transformation.Translate{
+			V: value.NewFloatXYZ(10, 15, 20),
+		},
+	)
+
+	content, _ := scad.FunctionContent(thing)
+	fmt.Println(content)
+	// Output: translate(v=[10, 15, 20]) {
+	//   color(c=[0.1, 0.2, 0.3]) {
+	//     cube(size=5);
+	//   }
+	// }
 }

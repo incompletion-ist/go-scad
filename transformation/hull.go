@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/scad"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Hull is a hull transform.
+type Hull struct {
+	Children []interface{}
+}
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Wrap wraps a child with this Hull.
+func (hull Hull) Wrap(child interface{}) scad.Wrapper {
+	hull.Children = append([]interface{}{child}, hull.Children...)
+
+	return hull
 }

@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive3d_test
 
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
+	"go.incompletion.ist/scad/primitive3d"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
+func ExampleCylinder() {
+	cylinder := primitive3d.Cylinder{
+		H:  value.NewFloat(50),
+		D1: value.NewFloat(20),
+		D2: value.NewFloat(5),
 	}
+
+	content, _ := scad.FunctionContent(cylinder)
+	fmt.Println(content)
+	// Output: cylinder(d1=20, d2=5, h=50);
 }

@@ -12,40 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dimples
+package boolean_test
 
 import (
-	"math"
+	"fmt"
 
+	"go.incompletion.ist/scad/boolean"
 	"go.incompletion.ist/scad/primitive3d"
 	"go.incompletion.ist/scad/scad"
 	"go.incompletion.ist/scad/transformation"
 	"go.incompletion.ist/scad/value"
 )
 
-// Dimple is a sphere that will be removed from a Die.
-type Dimple struct {
-	Name scad.ModuleName `scad:"dimple"`
+func ExampleDifference() {
+	var wallThickness float64 = 1
+	var outerSize float64 = 20
 
-	// Depth is how deep the dimple should be.
-	Depth float64
-
-	// Diameter is how wide the dimple should be where it intersects the Die.
-	Diameter float64
-}
-
-// EncodeSCAD implements custom encoding for scad.Encode.
-func (d Dimple) EncodeSCAD() (interface{}, error) {
-	sphereRadius := (math.Pow(d.Depth, 2) + math.Pow(d.Diameter/2, 2)) / (2 * d.Depth)
-
-	return scad.Apply(
-		primitive3d.Sphere{R: value.NewFloat(sphereRadius)},
+	outerCube := primitive3d.Cube{Size: value.NewFloat(outerSize)}
+	innerCube := scad.Apply(
+		primitive3d.Cube{SizeXYZ: value.NewFloatXYZ(
+			outerSize-2*wallThickness,
+			outerSize-2*wallThickness,
+			outerSize,
+		)},
 		transformation.Translate{
-			V: value.NewFloatXYZ(0, 0, sphereRadius-d.Depth),
+			V: value.NewFloatXYZ(wallThickness, wallThickness, wallThickness),
 		},
-		transformation.Rotate{
-			A: value.NewFloat(180),
-			V: value.NewFloatXYZ(1, 0, 0),
+	)
+
+	shell := scad.Apply(
+		outerCube,
+		boolean.Difference{
+			Children: []interface{}{innerCube},
 		},
-	), nil
+	)
+
+	content, _ := scad.FunctionContent(shell)
+	fmt.Println(content)
+	// Output: difference() {
+	//   cube(size=20);
+	//   translate(v=[1, 1, 1]) {
+	//     cube(size=[18, 18, 20]);
+	//   }
+	// }
 }

@@ -12,17 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive2d
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/value"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Text is text.
+type Text struct {
+	Text      value.String `scad:"text"`
+	Size      value.Float  `scad:"size"`
+	Font      value.String `scad:"font"`
+	Halign    value.String `scad:"halign"`
+	Valign    value.String `scad:"valign"`
+	Spacing   value.Float  `scad:"spacing"`
+	Direction value.String `scad:"direction"`
+	Language  value.String `scad:"language"`
+	Script    value.String `scad:"script"`
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+	FN value.Int `scad:"$fn"`
 }

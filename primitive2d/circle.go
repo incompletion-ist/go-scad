@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive2d
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/value"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Circle is a circle.
+type Circle struct {
+	// Only one of R or D should be set.
+	R value.Float `scad:"r"`
+	D value.Float `scad:"d"`
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
 }

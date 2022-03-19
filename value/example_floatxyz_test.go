@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package value_test
 
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+func ExampleFloatXYZ() {
+	// unsetFloatXYZ has not been explicitly set
+	var unsetFloatXYZ value.FloatXYZ
+	stringValue, ok := unsetFloatXYZ.GetParameterValue()
+	fmt.Printf("value: %s, ok: %v\n", stringValue, ok)
+
+	// setFloatXYZ is explicitly set to [0, 0, 0]
+	setFloatXYZ := value.NewFloatXYZ(0, 0, 0)
+	stringValue, ok = setFloatXYZ.GetParameterValue()
+	fmt.Printf("value: %s, ok: %v\n", stringValue, ok)
+	// Output: value: [0, 0, 0], ok: false
+	// value: [0, 0, 0], ok: true
 }

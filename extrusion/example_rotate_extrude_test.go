@@ -12,17 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package extrusion_test
 
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
+	"go.incompletion.ist/scad/extrusion"
+	"go.incompletion.ist/scad/primitive2d"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/transformation"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+func ExampleRotateExtrude() {
+	halfDonut := scad.Apply(
+		primitive2d.Circle{
+			D: value.NewFloat(5),
+		},
+		transformation.Translate{
+			V: value.NewFloatXYZ(5, 0, 0),
+		},
+		extrusion.RotateExtrude{
+			Angle: value.NewFloat(180),
+		},
+	)
+
+	content, _ := scad.FunctionContent(halfDonut)
+	fmt.Println(content)
+	// Output: rotate_extrude(angle=180) {
+	//   translate(v=[5, 0, 0]) {
+	//     circle(d=5);
+	//   }
+	// }
 }
