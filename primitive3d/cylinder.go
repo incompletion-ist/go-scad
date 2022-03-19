@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive3d
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Cylinder is a cylinder.
+type Cylinder struct {
+	H      value.Float `scad:"h"`
+	R      value.Float `scad:"r"`
+	R1     value.Float `scad:"r1"`
+	R2     value.Float `scad:"r2"`
+	D      value.Float `scad:"d"`
+	D1     value.Float `scad:"d1"`
+	D2     value.Float `scad:"d2"`
+	Center value.Bool  `scad:"center"`
+
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
 }

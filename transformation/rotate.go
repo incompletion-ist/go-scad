@@ -12,17 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Rotate is a rotate transform.
+type Rotate struct {
+	// Only one of A, Axyz may be set.
+	A    value.Float    `scad:"a"`
+	Axyz value.FloatXYZ `scad:"a"`
+
+	V value.FloatXYZ `scad:"v"`
+
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Rotate.
+func (rotate Rotate) Wrap(child interface{}) scad.Wrapper {
+	rotate.Children = append([]interface{}{child}, rotate.Children...)
+
+	return rotate
 }

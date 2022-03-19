@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Translate is a translate operation.
+type Translate struct {
+	V        value.FloatXYZ `scad:"v"`
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Translate.
+func (translate Translate) Wrap(child interface{}) scad.Wrapper {
+	translate.Children = append([]interface{}{child}, translate.Children...)
+
+	return translate
 }

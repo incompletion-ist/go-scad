@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive2d_test
 
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/primitive2d"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
+func ExampleText() {
+	text := primitive2d.Text{
+		Text: value.NewString("Hello World!"),
+		Size: value.NewFloat(10),
 	}
+
+	content, _ := scad.FunctionContent(text)
+	fmt.Println(content)
+	// Output: text(size=10, text="Hello World!");
 }

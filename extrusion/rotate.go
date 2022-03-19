@@ -12,17 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package extrusion
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// RotateExtrude is a rotate extrude.
+type RotateExtrude struct {
+	rotateExtrude scad.AutoFunctionName `scad:"rotate_extrude"` //nolint:golint,structcheck,unused
+
+	Convexity value.Int   `scad:"convexity"`
+	Angle     value.Float `scad:"angle"`
+
+	FA value.Float `scad:"$fa"`
+	FS value.Float `scad:"$fs"`
+	FN value.Int   `scad:"$fn"`
+
+	Children []interface{}
+}
+
+// Wrap wraps a child with this RotateExtrude.
+func (extrude RotateExtrude) Wrap(child interface{}) scad.Wrapper {
+	extrude.Children = append([]interface{}{child}, extrude.Children...)
+
+	return extrude
 }

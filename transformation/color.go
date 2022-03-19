@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Color is a color.
+type Color struct {
+	C     value.FloatXYZ `scad:"c"`
+	Alpha value.Float    `scad:"alpha"`
+
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Color.
+func (color Color) Wrap(child interface{}) scad.Wrapper {
+	color.Children = append([]interface{}{child}, color.Children...)
+
+	return color
 }

@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive3d
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Cube is a cube.
+type Cube struct {
+	// Only one of these size values may be set.
+	Size    value.Float    `scad:"size"`
+	SizeXYZ value.FloatXYZ `scad:"size"`
+
+	Center value.Bool
 }

@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package primitive2d
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Square is a square.
+type Square struct {
+	// Only one of Size or SizeXY should be set.
+	Size   value.Float `scad:"size"`
+	SizeXY value.Float `scad:"size"`
+
+	Center value.Bool
 }

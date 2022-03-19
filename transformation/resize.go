@@ -12,17 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Resize is a resize transform.
+type Resize struct {
+	NewSize value.FloatXYZ `scad:"newsize"`
+	Auto    value.Bool     `scad:"auto"`
+
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Resize.
+func (resize Resize) Wrap(child interface{}) scad.Wrapper {
+	resize.Children = append([]interface{}{child}, resize.Children...)
+
+	return resize
 }

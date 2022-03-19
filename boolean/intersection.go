@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package boolean
 
-import (
-	"fmt"
+import "go.incompletion.ist/scad/scad"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
-)
+// Intersection is an intersection boolean operation.
+type Intersection struct {
+	Children []interface{}
+}
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Wrap wraps a child with this Intersection.
+func (intersection Intersection) Wrap(child interface{}) scad.Wrapper {
+	intersection.Children = append([]interface{}{child}, intersection.Children...)
+
+	return intersection
 }

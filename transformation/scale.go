@@ -12,17 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package transformation
 
 import (
-	"fmt"
-
-	"go.incompletion.ist/scad/examples/dice/die"
 	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/scad/value"
 )
 
-func main() {
-	if err := scad.WriteMap(die.DieSamples); err != nil {
-		fmt.Println("failure:", err)
-	}
+// Scale is a scale transform.
+type Scale struct {
+	V value.FloatXYZ `scad:"v"`
+
+	Children []interface{}
+}
+
+// Wrap wraps a child with this Scale.
+func (scale Scale) Wrap(child interface{}) scad.Wrapper {
+	scale.Children = append([]interface{}{child}, scale.Children...)
+
+	return scale
 }

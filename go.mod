@@ -1,3 +1,3 @@
-module github.com/micahkemp/scad
+module go.incompletion.ist/scad
 
 go 1.17
