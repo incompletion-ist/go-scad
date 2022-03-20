@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package primitive3d provides OpenSCAD 3d primitive types.
+// Package primitive3d provides OpenSCAD 3D primitive types.
 package primitive3d
