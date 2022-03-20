@@ -16,3 +16,74 @@
 // function calls. Only explicitly set values are passed as function arguments.
 // The types in this package adhere to the scad.ParameterValueGetter interface.
 package value
+
+import (
+	"fmt"
+	"reflect"
+	"strconv"
+)
+
+// explicitlyValuable is the union of types available for explicitValue.
+type explicitlyValuable interface {
+	string | bool | int | float64
+}
+
+// explicitValue stores a value for a explicitlyValuable type.
+type explicitValue[T explicitlyValuable] struct {
+	value T
+}
+
+// newExplicitValue returns a pointer to a new explicitValue for the given value.
+func newExplicitValue[T explicitlyValuable](value T) *explicitValue[T] {
+	var e explicitValue[T]
+
+	e.value = value
+
+	return &e
+}
+
+// ValueOk returns the stored value and a boolean indicating if the value was set
+// (not a nil pointer). If the pointer is nil, it returns the zero value for
+// its stored type.
+func (e *explicitValue[T]) ValueOk() (T, bool) {
+	var value T
+
+	if e != nil {
+		value = e.value
+	}
+
+	return value, e != nil
+}
+
+// Value returns the stored value (or the zero value, if a nil pointer).
+func (e *explicitValue[T]) Value() T {
+	value, _ := e.ValueOk()
+
+	return value
+}
+
+// GetParameterValue returns the string representation for the stored value. It
+// always returns true, as this method is not on a pointer.
+func (e explicitValue[T]) GetParameterValue() (string, bool) {
+	storedValueV := reflect.ValueOf(e.value)
+	storedValueK := storedValueV.Kind()
+
+	if storedValueK == reflect.String {
+		return fmt.Sprintf("%q", storedValueV.String()), true
+	}
+
+	if storedValueK == reflect.Int {
+		return strconv.FormatInt(storedValueV.Int(), 10), true
+	}
+
+	if storedValueK == reflect.Float64 {
+		return strconv.FormatFloat(storedValueV.Float(), 'f', -1, 64), true
+	}
+
+	if storedValueK == reflect.Bool {
+		return strconv.FormatBool(storedValueV.Bool()), true
+	}
+
+	// this should be unreachable
+	return "", false
+}
