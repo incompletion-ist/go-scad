@@ -14,7 +14,7 @@
 
 package boolean
 
-import "go.incompletion.ist/scad/scad"
+import "go.incompletion.ist/go-scad/scad"
 
 // Union is a union boolean operation.
 type Union struct {

@@ -14,7 +14,7 @@
 
 package transformation
 
-import "go.incompletion.ist/scad/scad"
+import "go.incompletion.ist/go-scad/scad"
 
 // Hull is a hull transform.
 type Hull struct {

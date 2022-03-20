@@ -14,7 +14,7 @@
 
 package boolean
 
-import "go.incompletion.ist/scad/scad"
+import "go.incompletion.ist/go-scad/scad"
 
 // Difference is a difference boolean operation.
 type Difference struct {

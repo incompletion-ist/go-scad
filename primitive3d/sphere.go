@@ -15,7 +15,7 @@
 package primitive3d
 
 import (
-	"go.incompletion.ist/scad/value"
+	"go.incompletion.ist/go-scad/value"
 )
 
 // Sphere is a sphere.

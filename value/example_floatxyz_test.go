@@ -17,7 +17,7 @@ package value_test
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/value"
+	"go.incompletion.ist/go-scad/value"
 )
 
 func ExampleFloatXYZ() {
