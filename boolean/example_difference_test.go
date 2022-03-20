@@ -17,11 +17,11 @@ package boolean_test
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/boolean"
-	"go.incompletion.ist/scad/primitive3d"
-	"go.incompletion.ist/scad/scad"
-	"go.incompletion.ist/scad/transformation"
-	"go.incompletion.ist/scad/value"
+	"go.incompletion.ist/go-scad/boolean"
+	"go.incompletion.ist/go-scad/primitive3d"
+	"go.incompletion.ist/go-scad/scad"
+	"go.incompletion.ist/go-scad/transformation"
+	"go.incompletion.ist/go-scad/value"
 )
 
 func ExampleDifference() {

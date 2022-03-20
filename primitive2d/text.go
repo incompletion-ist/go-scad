@@ -14,7 +14,7 @@
 
 package primitive2d
 
-import "go.incompletion.ist/scad/value"
+import "go.incompletion.ist/go-scad/value"
 
 // Text is text.
 type Text struct {

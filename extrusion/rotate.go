@@ -15,8 +15,8 @@
 package extrusion
 
 import (
-	"go.incompletion.ist/scad/scad"
-	"go.incompletion.ist/scad/value"
+	"go.incompletion.ist/go-scad/scad"
+	"go.incompletion.ist/go-scad/value"
 )
 
 // RotateExtrude is a rotate extrude.

@@ -1,3 +1,3 @@
-module go.incompletion.ist/scad
+module go.incompletion.ist/go-scad
 
 go 1.18

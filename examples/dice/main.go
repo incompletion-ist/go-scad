@@ -17,8 +17,8 @@ package main
 import (
 	"fmt"
 
-	"go.incompletion.ist/scad/examples/dice/die"
-	"go.incompletion.ist/scad/scad"
+	"go.incompletion.ist/go-scad/examples/dice/die"
+	"go.incompletion.ist/go-scad/scad"
 )
 
 func main() {

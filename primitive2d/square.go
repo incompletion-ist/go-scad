@@ -15,7 +15,7 @@
 package primitive2d
 
 import (
-	"go.incompletion.ist/scad/value"
+	"go.incompletion.ist/go-scad/value"
 )
 
 // Square is a square.

@@ -14,7 +14,7 @@
 
 package transformation
 
-import "go.incompletion.ist/scad/scad"
+import "go.incompletion.ist/go-scad/scad"
 
 // Minkowski is a minkowsi transform.
 type Minkowski struct {
