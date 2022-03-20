@@ -30,7 +30,8 @@ type explicitlyValuable interface {
 
 // explicitValue stores a value for a explicitlyValuable type.
 type explicitValue[T explicitlyValuable] struct {
-	value T
+	// value isn't actually unused, but the available golangci-lint version thinks it is
+	value T //nolint:golint,structcheck
 }
 
 // newExplicitValue returns a pointer to a new explicitValue for the given value.
