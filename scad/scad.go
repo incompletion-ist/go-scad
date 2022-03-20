@@ -139,6 +139,9 @@ func Encode(i interface{}) (Function, error) {
 		}
 
 		fieldV := iV.Field(i)
+		if fieldV.Kind() == reflect.Ptr && !fieldV.IsZero() {
+			fieldV = fieldV.Elem()
+		}
 		fieldT := fieldV.Type()
 
 		// ModuleName
