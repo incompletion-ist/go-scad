@@ -14,12 +14,6 @@
 
 package value
 
-import (
-	"fmt"
-	"strconv"
-	"strings"
-)
-
 // floatXY enables embedding a FloatXY in FloatXYZ without exporting it.
 type floatXY struct {
 	FloatXY
@@ -54,13 +48,7 @@ func (xyz FloatXYZ) ValueZ() float64 {
 // GetParameterValue returns a string value for the FloatXYZ, and a boolean
 // indicating if its value was explicity set.
 func (xyz FloatXYZ) GetParameterValue() (string, bool) {
-	values := strings.Join([]string{
-		strconv.FormatFloat(xyz.valueX, 'f', -1, 64),
-		strconv.FormatFloat(xyz.valueY, 'f', -1, 64),
-		strconv.FormatFloat(xyz.valueZ, 'f', -1, 64),
-	}, ", ")
-
-	value := fmt.Sprintf("[%s]", values)
+	value := floatTupleString(xyz.valueX, xyz.valueY, xyz.valueZ)
 
 	return value, xyz.set
 }
