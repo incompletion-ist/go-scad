@@ -75,3 +75,19 @@ func NewFloatsXY(value ...[2]float64) FloatsXY {
 
 	return xy
 }
+
+// NewFloatsXYRelative returns a new FloatsXY by applying values relatively to the point
+// defined by start.
+func NewFloatsXYRelative(start [2]float64, values ...[2]float64) FloatsXY {
+	newValues := make([][2]float64, 0, len(values)+1)
+
+	newValues = append(newValues, start)
+	for i, value := range values {
+		newValues = append(newValues, [2]float64{
+			newValues[i][0] + value[0],
+			newValues[i][1] + value[1],
+		})
+	}
+
+	return NewFloatsXY(newValues...)
+}
